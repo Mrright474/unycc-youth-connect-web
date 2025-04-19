@@ -1,0 +1,166 @@
+
+import { useState } from "react";
+import { UserCheck, Users, Calendar } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
+
+const IndividualForm = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    country: "",
+    ageGroup: "",
+    interest: "",
+    heardFrom: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Application Submitted",
+      description: "Thank you for your interest in joining UNYCC. We'll be in touch soon!",
+    });
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      country: "",
+      ageGroup: "",
+      interest: "",
+      heardFrom: "",
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="firstName">First Name</Label>
+          <Input
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <Label htmlFor="lastName">Last Name</Label>
+          <Input
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label htmlFor="email">Email Address</Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="country">Country</Label>
+        <Select 
+          onValueChange={(value) => handleSelectChange("country", value)}
+          value={formData.country}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select your country" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="us">United States</SelectItem>
+            <SelectItem value="ca">Canada</SelectItem>
+            <SelectItem value="uk">United Kingdom</SelectItem>
+            <SelectItem value="au">Australia</SelectItem>
+            <SelectItem value="other">Other</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
+        <Label>Age Group</Label>
+        <RadioGroup 
+          onValueChange={(value) => handleSelectChange("ageGroup", value)}
+          value={formData.ageGroup}
+          className="flex flex-col space-y-1 mt-2"
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="under18" id="under18" />
+            <Label htmlFor="under18">Under 18</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="18-24" id="18-24" />
+            <Label htmlFor="18-24">18-24</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="25-34" id="25-34" />
+            <Label htmlFor="25-34">25-34</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="35+" id="35+" />
+            <Label htmlFor="35+">35+</Label>
+          </div>
+        </RadioGroup>
+      </div>
+
+      <div>
+        <Label htmlFor="interest">Areas of Interest</Label>
+        <Select 
+          onValueChange={(value) => handleSelectChange("interest", value)}
+          value={formData.interest}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select your primary interest" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="climate">Climate Action</SelectItem>
+            <SelectItem value="education">Quality Education</SelectItem>
+            <SelectItem value="gender">Gender Equality</SelectItem>
+            <SelectItem value="poverty">Poverty Reduction</SelectItem>
+            <SelectItem value="health">Good Health & Well-being</SelectItem>
+            <SelectItem value="other">Other</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
+        <Label htmlFor="heardFrom">How did you hear about UNYCC?</Label>
+        <Input
+          id="heardFrom"
+          name="heardFrom"
+          value={formData.heardFrom}
+          onChange={handleChange}
+        />
+      </div>
+
+      <Button type="submit" className="w-full">Submit Application</Button>
+    </form>
+  );
+};
+
+export default IndividualForm;
