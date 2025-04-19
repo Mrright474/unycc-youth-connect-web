@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -6,6 +5,7 @@ import JoinOptions from "@/components/join/JoinOptions";
 import IndividualForm from "@/components/join/IndividualForm";
 import ClubForm from "@/components/join/ClubForm";
 import PartnerForm from "@/components/join/PartnerForm";
+import { Handshake } from "lucide-react";
 
 const Join = () => {
   return (
