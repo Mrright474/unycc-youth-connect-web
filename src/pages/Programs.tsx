@@ -18,40 +18,40 @@ const Programs = () => {
     {
       title: "Youth Leadership Academy",
       description: "A comprehensive leadership development program that equips young people with the skills, knowledge, and networks to lead sustainable development initiatives.",
-      icon: <Award className="h-10 w-10 text-unblue" />,
+      icon: "/images/logo1.png",
       features: [
         "Six-month structured curriculum",
         "Mentorship from experienced leaders",
         "Practical project implementation",
         "Global networking opportunities"
       ],
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop",
+      image: "/images/logo4.png",
       link: "/programs/leadership-academy"
     },
     {
       title: "SDG Innovation Challenge",
       description: "An annual competition that challenges youth to develop innovative solutions for specific Sustainable Development Goals in their communities.",
-      icon: <Lightbulb className="h-10 w-10 text-unblue" />,
+      icon: "/images/logo2.png",
       features: [
         "Seed funding for winning projects",
         "Technical support and mentorship",
         "Prototype development assistance",
         "Scaling opportunities for successful initiatives"
       ],
-      image: "https://images.unsplash.com/photo-1559025630-1792b5f57118?q=80&w=800&auto=format&fit=crop",
+      image: "/images/logo5.png",
       link: "/programs/innovation-challenge"
     },
     {
       title: "Global Youth Forum",
       description: "An annual gathering bringing together youth leaders from across the UNYCC network to share experiences, learn from each other, and develop collaborative initiatives.",
-      icon: <Globe className="h-10 w-10 text-unblue" />,
+      icon: "/images/logo3.png",
       features: [
         "High-level speakers and workshops",
         "Cross-cultural collaboration opportunities",
         "Policy development sessions",
         "Showcasing of successful local projects"
       ],
-      image: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?q=80&w=800&auto=format&fit=crop",
+      image: "/images/logo6.png",
       link: "/programs/global-forum"
     }
   ];
@@ -146,13 +146,17 @@ const Programs = () => {
                     <img 
                       src={program.image} 
                       alt={program.title} 
-                      className="w-full h-64 md:h-80 object-cover rounded-lg shadow-md"
+                      className="w-full h-64 md:h-80 object-contain rounded-lg shadow-md bg-white p-4"
                     />
                   </div>
                   <div className="lg:w-1/2">
                     <div className="flex items-center mb-4">
                       <div className="bg-unblue/10 p-3 rounded-full mr-4">
-                        {program.icon}
+                        <img 
+                          src={program.icon} 
+                          alt={`${program.title} icon`} 
+                          className="h-10 w-10"
+                        />
                       </div>
                       <h3 className="text-2xl font-bold">{program.title}</h3>
                     </div>
