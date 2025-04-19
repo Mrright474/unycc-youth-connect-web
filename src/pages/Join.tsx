@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { UserPlus, Building, School, UserCheck, Users, Globe, Calendar } from "lucide-react";
+import { UserPlus, Building, School, UserCheck, Users, Globe, Calendar, Handshake } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
