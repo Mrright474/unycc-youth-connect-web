@@ -40,13 +40,13 @@ const About = () => {
     {
       name: "Ben Kazigo Luweru",
       title: "Founder & Global President",
-      image: "/lovable-uploads/416b4060-7352-4b3e-b1be-69e4a5819481.png",
+      image: "/lovable-uploads/e15edb8c-48c2-4da5-8bae-b8b5b88ce0fc.png",
       bio: "A visionary youth leader from Uganda, driving global sustainable development through innovative youth engagement."
     },
     {
       name: "Ellah Philp",
       title: "Co-Founder & Deputy President",
-      image: "/lovable-uploads/1a1e9f70-9631-455f-b4bd-329317acc947.png",
+      image: "/lovable-uploads/c92a3883-002f-45f5-bd97-eb9f61d67882.png",
       bio: "A passionate advocate from Sudan, committed to empowering youth and creating meaningful social change."
     },
     {
