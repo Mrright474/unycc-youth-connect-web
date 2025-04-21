@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Pen, Briefcase, Gavel } from "lucide-react";
 
 const TeamSection = () => {
   const team = [
@@ -16,16 +17,25 @@ const TeamSection = () => {
       bio: "A passionate advocate from Sudan, committed to empowering youth and creating meaningful social change."
     },
     {
-      name: "Sarah Williams",
-      title: "Global Outreach Coordinator",
-      image: "https://images.unsplash.com/photo-1601931935821-5fbe71157695?q=80&w=200&auto=format&fit=crop",
-      bio: "Connecting UNYCC with global partners and expanding our international network."
+      name: "Bakasumba Arnest",
+      title: "Secretary General",
+      image: "/lovable-uploads/71de3a9f-b354-4926-8c9a-a4d45433d8ce.png",
+      bio: "Dedicated leader from Uganda managing organizational operations and documentation.",
+      icon: Pen
     },
     {
-      name: "David Lee",
-      title: "Youth Engagement Specialist",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
-      bio: "Designing innovative programs to engage and empower young change-makers."
+      name: "Laura Muwanguzi",
+      title: "Director of Partnerships & Outreach",
+      image: "/lovable-uploads/9be39adb-395c-4a89-b163-3d842cf95a09.png",
+      bio: "Strategic partnership builder from Uganda fostering global collaborations for youth development.",
+      icon: Briefcase
+    },
+    {
+      name: "Buule Paul",
+      title: "Head Legal Team",
+      image: "/lovable-uploads/04289bb7-af35-4c17-a18e-988bc4921c86.png",
+      bio: "Legal expert from Uganda ensuring compliance and providing strategic legal guidance.",
+      icon: Gavel
     }
   ];
 
@@ -39,7 +49,7 @@ const TeamSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {team.map((member, index) => (
             <div key={index} className="text-center group">
               <div className="mb-4 relative mx-auto w-48 h-48 overflow-hidden rounded-full shadow-lg transition-transform transform group-hover:scale-105">
@@ -50,7 +60,10 @@ const TeamSection = () => {
                 />
               </div>
               <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-              <p className="text-unblue mb-2">{member.title}</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                {member.icon && <member.icon className="w-4 h-4 text-unblue" />}
+                <p className="text-unblue">{member.title}</p>
+              </div>
               <p className="text-gray-600 px-4 text-sm">{member.bio}</p>
             </div>
           ))}
