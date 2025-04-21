@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Globe, Users, Award, Handshake, UserPlus, Calendar } from "lucide-react";
@@ -39,24 +38,28 @@ const About = () => {
 
   const team = [
     {
-      name: "Jane Smith",
-      title: "Executive Director",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"
+      name: "Ben Kazigo Luweru",
+      title: "Founder & Global President",
+      image: "/lovable-uploads/416b4060-7352-4b3e-b1be-69e4a5819481.png",
+      bio: "A visionary youth leader from Uganda, driving global sustainable development through innovative youth engagement."
     },
     {
-      name: "Michael Johnson",
-      title: "Director of Programs",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200&auto=format&fit=crop"
+      name: "Ellah Philp",
+      title: "Co-Founder & Deputy President",
+      image: "/lovable-uploads/1a1e9f70-9631-455f-b4bd-329317acc947.png",
+      bio: "A passionate advocate from Sudan, committed to empowering youth and creating meaningful social change."
     },
     {
       name: "Sarah Williams",
       title: "Global Outreach Coordinator",
-      image: "https://images.unsplash.com/photo-1601931935821-5fbe71157695?q=80&w=200&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1601931935821-5fbe71157695?q=80&w=200&auto=format&fit=crop",
+      bio: "Connecting UNYCC with global partners and expanding our international network."
     },
     {
       name: "David Lee",
       title: "Youth Engagement Specialist",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop"
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop",
+      bio: "Designing innovative programs to engage and empower young change-makers."
     }
   ];
 
@@ -136,8 +139,8 @@ const About = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {team.map((member, index) => (
-                <div key={index} className="text-center">
-                  <div className="mb-4 relative mx-auto w-48 h-48 overflow-hidden rounded-full">
+                <div key={index} className="text-center group">
+                  <div className="mb-4 relative mx-auto w-48 h-48 overflow-hidden rounded-full shadow-lg transition-transform transform group-hover:scale-105">
                     <img 
                       src={member.image} 
                       alt={member.name} 
@@ -145,7 +148,8 @@ const About = () => {
                     />
                   </div>
                   <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
-                  <p className="text-unblue">{member.title}</p>
+                  <p className="text-unblue mb-2">{member.title}</p>
+                  <p className="text-gray-600 px-4 text-sm">{member.bio}</p>
                 </div>
               ))}
             </div>
