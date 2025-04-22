@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -24,7 +25,7 @@ const Navbar = () => {
             <img
               src="/lovable-uploads/1ddde308-f2d4-42ba-be9d-a316584451ce.png"
               alt="UNYCC Logo"
-              className="h-12 w-auto"
+              className="h-16 w-auto object-contain hover:opacity-80 transition-opacity"
             />
           </Link>
 
