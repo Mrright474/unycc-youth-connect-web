@@ -1,15 +1,11 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isResourcesOpen, setIsResourcesOpen] = useState(false);
-
   const toggleMenu = () => setIsOpen(!isOpen);
-  const toggleResources = () => setIsResourcesOpen(!isResourcesOpen);
 
   const menuItems = [
     { name: "Home", path: "/" },
@@ -25,7 +21,11 @@ const Navbar = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center">
-            <span className="text-2xl font-bold text-unblue">UNYCC</span>
+            <img
+              src="/lovable-uploads/1ddde308-f2d4-42ba-be9d-a316584451ce.png"
+              alt="UNYCC Logo"
+              className="h-12 w-auto"
+            />
           </Link>
 
           {/* Desktop Menu */}
