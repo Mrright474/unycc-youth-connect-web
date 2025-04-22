@@ -12,7 +12,7 @@ const Footer = () => {
             <img
               src="/lovable-uploads/1ddde308-f2d4-42ba-be9d-a316584451ce.png"
               alt="UNYCC Logo"
-              className="h-20 w-auto object-contain mb-4 hover:opacity-80 transition-opacity"
+              className="h-20 w-auto object-contain mb-4 hover:opacity-80 transition-colors bg-white p-3 rounded-lg shadow-sm"
             />
             <h3 className="text-xl font-bold text-unblue mb-4">UNYCC</h3>
             <p className="text-gray-600 mb-4">
