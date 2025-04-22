@@ -1,6 +1,5 @@
-
 import { Link } from "react-router-dom";
-import { Mail, Facebook, Twitter, Instagram, Linkedin, Globe } from "lucide-react";
+import { Mail, Facebook, Twitter, Instagram, Linkedin, Globe, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -15,11 +14,11 @@ const Footer = () => {
               United Nations Youth Clubs and Communities - Empowering youth to drive sustainable change through leadership, innovation, and collaboration.
             </p>
             <div className="flex space-x-4">
+              <a href="https://x.com/UNYCC-ORG" target="_blank" className="text-gray-500 hover:text-unblue" aria-label="X (Twitter)">
+                <Twitter size={20} />
+              </a>
               <a href="#" className="text-gray-500 hover:text-unblue" aria-label="Facebook">
                 <Facebook size={20} />
-              </a>
-              <a href="#" className="text-gray-500 hover:text-unblue" aria-label="Twitter">
-                <Twitter size={20} />
               </a>
               <a href="#" className="text-gray-500 hover:text-unblue" aria-label="Instagram">
                 <Instagram size={20} />
@@ -56,11 +55,15 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-center text-gray-600">
                 <Mail size={18} className="mr-2" />
-                <a href="mailto:info@unycc.org" className="hover:text-unblue">info@unycc.org</a>
+                <a href="mailto:unitednationsyouthclubsunycc@gmail.com" className="hover:text-unblue">unitednationsyouthclubsunycc@gmail.com</a>
+              </li>
+              <li className="flex items-center text-gray-600">
+                <Phone size={18} className="mr-2" />
+                <a href="tel:+256744552195" className="hover:text-unblue">+256 744 552 195</a>
               </li>
               <li className="flex items-center text-gray-600">
                 <Globe size={18} className="mr-2" />
-                <span>Global Headquarters</span>
+                <span>Uganda, Market Street, Kampala</span>
               </li>
             </ul>
           </div>

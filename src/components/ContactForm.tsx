@@ -64,7 +64,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-1">Email Us</h3>
-                  <p className="text-gray-600">info@unycc.org</p>
+                  <p className="text-gray-600">unitednationsyouthclubsunycc@gmail.com</p>
                 </div>
               </div>
               
@@ -74,7 +74,7 @@ const ContactForm = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-1">Call Us</h3>
-                  <p className="text-gray-600">+1 (123) 456-7890</p>
+                  <p className="text-gray-600">+256 744 552 195</p>
                 </div>
               </div>
               
@@ -85,9 +85,9 @@ const ContactForm = () => {
                 <div>
                   <h3 className="text-lg font-semibold mb-1">Visit Us</h3>
                   <p className="text-gray-600">
-                    UNYCC Global Headquarters<br />
-                    123 UN Plaza<br />
-                    New York, NY 10017
+                    UNYCC Headquarters<br />
+                    Market Street, Kampala<br />
+                    Uganda
                   </p>
                 </div>
               </div>
