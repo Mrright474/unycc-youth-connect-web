@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { UserCheck, Users, Calendar } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -7,18 +6,21 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const IndividualForm = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     country: "",
-    ageGroup: "",
+    age_group: "",
     interest: "",
-    heardFrom: "",
+    heard_from: "",
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,21 +31,41 @@ const IndividualForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Application Submitted",
-      description: "Thank you for your interest in joining UNYCC. We'll be in touch soon!",
-    });
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      country: "",
-      ageGroup: "",
-      interest: "",
-      heardFrom: "",
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from('members')
+        .insert([formData]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Application Submitted",
+        description: "Thank you for your interest in joining UNYCC. We'll be in touch soon!",
+      });
+
+      setFormData({
+        first_name: "",
+        last_name: "",
+        email: "",
+        country: "",
+        age_group: "",
+        interest: "",
+        heard_from: "",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your application. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -53,8 +75,8 @@ const IndividualForm = () => {
           <Label htmlFor="firstName">First Name</Label>
           <Input
             id="firstName"
-            name="firstName"
-            value={formData.firstName}
+            name="first_name"
+            value={formData.first_name}
             onChange={handleChange}
             required
           />
@@ -63,8 +85,8 @@ const IndividualForm = () => {
           <Label htmlFor="lastName">Last Name</Label>
           <Input
             id="lastName"
-            name="lastName"
-            value={formData.lastName}
+            name="last_name"
+            value={formData.last_name}
             onChange={handleChange}
             required
           />
@@ -105,8 +127,8 @@ const IndividualForm = () => {
       <div>
         <Label>Age Group</Label>
         <RadioGroup 
-          onValueChange={(value) => handleSelectChange("ageGroup", value)}
-          value={formData.ageGroup}
+          onValueChange={(value) => handleSelectChange("age_group", value)}
+          value={formData.age_group}
           className="flex flex-col space-y-1 mt-2"
         >
           <div className="flex items-center space-x-2">
@@ -152,8 +174,8 @@ const IndividualForm = () => {
         <Label htmlFor="heardFrom">How did you hear about UNYCC?</Label>
         <Input
           id="heardFrom"
-          name="heardFrom"
-          value={formData.heardFrom}
+          name="heard_from"
+          value={formData.heard_from}
           onChange={handleChange}
         />
       </div>

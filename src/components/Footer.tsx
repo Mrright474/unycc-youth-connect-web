@@ -2,8 +2,51 @@ import { Link } from "react-router-dom";
 import { Mail, Facebook, Twitter, Instagram, Linkedin, Globe, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 
 const Footer = () => {
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const handleSubscribe = async () => {
+    if (!email) {
+      toast({
+        title: "Error",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubscribing(true);
+
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscriptions')
+        .insert([{ email }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Subscribed!",
+        description: "Thank you for subscribing to our newsletter.",
+      });
+      setEmail("");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem subscribing to the newsletter. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Error subscribing to newsletter:", error);
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
   return (
     <footer className="bg-ungray-light pt-12 pb-6">
       <div className="container mx-auto px-4 md:px-6">
@@ -77,8 +120,20 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Subscribe to Newsletter</h3>
             <p className="text-gray-600 mb-4">Stay updated with our latest news and events</p>
             <div className="flex flex-col space-y-2">
-              <Input type="email" placeholder="Your email address" className="rounded-md" />
-              <Button className="btn-primary">Subscribe</Button>
+              <Input 
+                type="email" 
+                placeholder="Your email address" 
+                className="rounded-md"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Button 
+                className="btn-primary" 
+                onClick={handleSubscribe}
+                disabled={isSubscribing}
+              >
+                {isSubscribing ? "Subscribing..." : "Subscribe"}
+              </Button>
             </div>
           </div>
         </div>

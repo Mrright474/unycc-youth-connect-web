@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,19 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const ClubForm = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
-    institutionName: "",
-    institutionType: "",
-    contactName: "",
-    contactEmail: "",
+    institution_name: "",
+    institution_type: "",
+    contact_name: "",
+    contact_email: "",
     country: "",
     city: "",
-    membersEstimate: "",
+    members_estimate: "",
     reason: "",
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -29,42 +31,65 @@ const ClubForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Club Application Submitted",
-      description: "Thank you for your interest in starting a UNYCC club. Our team will review your application and contact you soon.",
-    });
-    setFormData({
-      institutionName: "",
-      institutionType: "",
-      contactName: "",
-      contactEmail: "",
-      country: "",
-      city: "",
-      membersEstimate: "",
-      reason: "",
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase
+        .from('clubs')
+        .insert([{
+          ...formData,
+          members_estimate: parseInt(formData.members_estimate)
+        }]);
+
+      if (error) throw error;
+
+      toast({
+        title: "Club Application Submitted",
+        description: "Thank you for your interest in starting a UNYCC club. Our team will review your application and contact you soon.",
+      });
+
+      setFormData({
+        institution_name: "",
+        institution_type: "",
+        contact_name: "",
+        contact_email: "",
+        country: "",
+        city: "",
+        members_estimate: "",
+        reason: "",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem submitting your application. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <Label htmlFor="institutionName">School/Institution Name</Label>
+        <Label htmlFor="institution_name">School/Institution Name</Label>
         <Input
-          id="institutionName"
-          name="institutionName"
-          value={formData.institutionName}
+          id="institution_name"
+          name="institution_name"
+          value={formData.institution_name}
           onChange={handleChange}
           required
         />
       </div>
 
       <div>
-        <Label htmlFor="institutionType">Institution Type</Label>
+        <Label htmlFor="institution_type">Institution Type</Label>
         <Select 
-          onValueChange={(value) => handleSelectChange("institutionType", value)}
-          value={formData.institutionType}
+          onValueChange={(value) => handleSelectChange("institution_type", value)}
+          value={formData.institution_type}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select institution type" />
@@ -80,22 +105,22 @@ const ClubForm = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="contactName">Contact Person Name</Label>
+          <Label htmlFor="contact_name">Contact Person Name</Label>
           <Input
-            id="contactName"
-            name="contactName"
-            value={formData.contactName}
+            id="contact_name"
+            name="contact_name"
+            value={formData.contact_name}
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <Label htmlFor="contactEmail">Contact Email</Label>
+          <Label htmlFor="contact_email">Contact Email</Label>
           <Input
-            id="contactEmail"
-            name="contactEmail"
+            id="contact_email"
+            name="contact_email"
             type="email"
-            value={formData.contactEmail}
+            value={formData.contact_email}
             onChange={handleChange}
             required
           />
@@ -134,12 +159,12 @@ const ClubForm = () => {
       </div>
 
       <div>
-        <Label htmlFor="membersEstimate">Estimated Number of Initial Members</Label>
+        <Label htmlFor="members_estimate">Estimated Number of Initial Members</Label>
         <Input
-          id="membersEstimate"
-          name="membersEstimate"
+          id="members_estimate"
+          name="members_estimate"
           type="number"
-          value={formData.membersEstimate}
+          value={formData.members_estimate}
           onChange={handleChange}
           required
         />
