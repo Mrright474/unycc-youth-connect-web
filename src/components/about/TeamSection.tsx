@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { Pen, Briefcase, Gavel, Megaphone } from "lucide-react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const TeamSection = () => {
   const team = [
@@ -59,11 +61,14 @@ const TeamSection = () => {
           {team.map((member, index) => (
             <div key={index} className="text-center group">
               <div className="mb-4 relative mx-auto w-48 h-48 overflow-hidden rounded-full shadow-lg transition-transform transform group-hover:scale-105">
-                <img 
-                  src={member.image} 
-                  alt={member.name} 
-                  className="w-full h-full object-cover"
-                />
+                <Avatar className="w-full h-full">
+                  <AvatarImage 
+                    src={member.image} 
+                    alt={member.name}
+                    className="w-full h-full object-cover" 
+                  />
+                  <AvatarFallback>{member.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                </Avatar>
               </div>
               <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
               <div className="flex items-center justify-center gap-2 mb-2">
