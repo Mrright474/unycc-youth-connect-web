@@ -8,7 +8,12 @@ const LearnMore = () => {
   const { slug } = useParams();
   
   // Define content based on slug
-  const pageContent = {
+  const pageContent: Record<string, {
+    title: string;
+    description: string;
+    image: string;
+    content: string[];
+  }> = {
     'school': {
       title: 'School Club Program',
       description: 'Our school club program helps students establish UNYCC chapters at their educational institutions, providing resources, training, and support for youth-led sustainability initiatives.',
