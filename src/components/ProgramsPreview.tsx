@@ -14,7 +14,7 @@ const ProgramsPreview = () => {
     {
       title: "SDG Innovation Challenge",
       description: "An annual competition that challenges youth to develop innovative solutions addressing specific SDG targets.",
-      image: "https://images.unsplash.com/photo-1559025630-1792b5f57118?q=80&w=800&auto=format&fit=crop",
+      image: "/lovable-uploads/46b55093-0f47-444f-9e15-c55c8afd3197.png",
       link: "/programs/innovation-challenge"
     },
     {
