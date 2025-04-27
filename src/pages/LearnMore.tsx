@@ -19,10 +19,10 @@ const LearnMore = () => {
       description: 'Our school club program helps students establish UNYCC chapters at their educational institutions, providing resources, training, and support for youth-led sustainability initiatives.',
       image: '/lovable-uploads/416b4060-7352-4b3e-b1be-69e4a5819481.png',
       content: [
-        'School clubs are an integral part of UNYCC's mission to empower young people globally.',
-        'Members receive training in leadership, project management, and SDG implementation.',
-        'Clubs organize awareness campaigns, sustainability projects, and community outreach.',
-        'Network with other UNYCC clubs globally for knowledge sharing and collaboration.'
+        "School clubs are an integral part of UNYCC's mission to empower young people globally.",
+        "Members receive training in leadership, project management, and SDG implementation.",
+        "Clubs organize awareness campaigns, sustainability projects, and community outreach.",
+        "Network with other UNYCC clubs globally for knowledge sharing and collaboration."
       ]
     },
     'partner': {
@@ -30,10 +30,10 @@ const LearnMore = () => {
       description: 'UNYCC actively seeks collaborations with organizations, governments, and businesses to amplify our impact on sustainable development.',
       image: '/lovable-uploads/5834fedb-aa6c-421b-91b8-d17a45eb3374.png',
       content: [
-        'Partners gain access to UNYCC's global youth network and innovative SDG solutions.',
-        'Collaborative projects amplify impact through shared resources and expertise.',
-        'Partners receive recognition through UNYCC's communication channels and events.',
-        'Long-term partnerships focus on achieving measurable progress on SDG targets.'
+        "Partners gain access to UNYCC's global youth network and innovative SDG solutions.",
+        "Collaborative projects amplify impact through shared resources and expertise.",
+        "Partners receive recognition through UNYCC's communication channels and events.",
+        "Long-term partnerships focus on achieving measurable progress on SDG targets."
       ]
     },
     'leadership-academy': {
@@ -41,10 +41,10 @@ const LearnMore = () => {
       description: 'A comprehensive training program that equips young leaders with the skills to drive sustainable change in their communities.',
       image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop',
       content: [
-        'Intensive leadership development through online and in-person training modules.',
-        'Mentorship from established leaders in sustainability and development.',
-        'Practical project implementation with support from UNYCC resources.',
-        'Certification and ongoing professional development opportunities.'
+        "Intensive leadership development through online and in-person training modules.",
+        "Mentorship from established leaders in sustainability and development.",
+        "Practical project implementation with support from UNYCC resources.",
+        "Certification and ongoing professional development opportunities."
       ]
     },
     'innovation-challenge': {
@@ -52,10 +52,10 @@ const LearnMore = () => {
       description: 'An annual competition that challenges youth to develop innovative solutions addressing specific SDG targets.',
       image: '/lovable-uploads/46b55093-0f47-444f-9e15-c55c8afd3197.png',
       content: [
-        'Competitive process for identifying groundbreaking youth-led solutions.',
-        'Expert mentorship and resources for finalist teams.',
-        'Seed funding for winning projects to move from concept to implementation.',
-        'Global showcase of innovations through UNYCC's partner network.'
+        "Competitive process for identifying groundbreaking youth-led solutions.",
+        "Expert mentorship and resources for finalist teams.",
+        "Seed funding for winning projects to move from concept to implementation.",
+        "Global showcase of innovations through UNYCC's partner network."
       ]
     },
     'action-projects': {
@@ -63,10 +63,10 @@ const LearnMore = () => {
       description: 'Grassroots initiatives led by UNYCC clubs to implement sustainable development projects at the local level.',
       image: 'https://images.unsplash.com/photo-1525026198548-4baa812f1183?q=80&w=800&auto=format&fit=crop',
       content: [
-        'Localized interventions addressing community-specific SDG challenges.',
-        'Youth-led planning, implementation, and evaluation of projects.',
-        'Collaboration with local stakeholders and community members.',
-        'Knowledge sharing across the global UNYCC network to scale successful models.'
+        "Localized interventions addressing community-specific SDG challenges.",
+        "Youth-led planning, implementation, and evaluation of projects.",
+        "Collaboration with local stakeholders and community members.",
+        "Knowledge sharing across the global UNYCC network to scale successful models."
       ]
     }
   };
