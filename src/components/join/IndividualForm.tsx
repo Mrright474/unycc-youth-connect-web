@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { UserCheck, Users, Calendar } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { countries } from "@/data/countries";
+import { sdgs } from "@/data/sdgs";
 
 const IndividualForm = () => {
   const { toast } = useToast();
@@ -115,11 +116,11 @@ const IndividualForm = () => {
             <SelectValue placeholder="Select your country" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="us">United States</SelectItem>
-            <SelectItem value="ca">Canada</SelectItem>
-            <SelectItem value="uk">United Kingdom</SelectItem>
-            <SelectItem value="au">Australia</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
+            {countries.map((country) => (
+              <SelectItem key={country.code} value={country.code}>
+                {country.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
@@ -160,12 +161,11 @@ const IndividualForm = () => {
             <SelectValue placeholder="Select your primary interest" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="climate">Climate Action</SelectItem>
-            <SelectItem value="education">Quality Education</SelectItem>
-            <SelectItem value="gender">Gender Equality</SelectItem>
-            <SelectItem value="poverty">Poverty Reduction</SelectItem>
-            <SelectItem value="health">Good Health & Well-being</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
+            {sdgs.map((sdg) => (
+              <SelectItem key={sdg.number} value={sdg.code}>
+                {sdg.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>

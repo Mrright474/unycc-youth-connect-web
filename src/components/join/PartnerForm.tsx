@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { countries } from "@/data/countries";
 
 const PartnerForm = () => {
   const { toast } = useToast();
@@ -123,12 +124,11 @@ const PartnerForm = () => {
             <SelectValue placeholder="Select country" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="us">United States</SelectItem>
-            <SelectItem value="ca">Canada</SelectItem>
-            <SelectItem value="uk">United Kingdom</SelectItem>
-            <SelectItem value="au">Australia</SelectItem>
-            <SelectItem value="global">Global Organization</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
+            {countries.map((country) => (
+              <SelectItem key={country.code} value={country.code}>
+                {country.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>

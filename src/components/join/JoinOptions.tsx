@@ -1,80 +1,49 @@
-
-import { UserPlus, Building, School, UserCheck, Users, Globe, Calendar, Handshake } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Handshake, Users, Lightbulb } from "lucide-react";
 
 const JoinOptions = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-      <div className="bg-ungray-light p-8 rounded-lg flex flex-col items-center text-center">
-        <div className="mb-4 bg-unblue/10 p-4 rounded-full">
-          <UserPlus className="h-8 w-8 text-unblue" />
-        </div>
-        <h3 className="text-xl font-semibold mb-2">Join as an Individual</h3>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <Card className="p-6">
+        <Handshake className="w-10 h-10 text-unblue mb-4" />
+        <h3 className="text-xl font-semibold mb-2">Individual Membership</h3>
         <p className="text-gray-600 mb-4">
-          Become a member of the UNYCC community and participate in local and global initiatives.
+          Connect with like-minded individuals, access exclusive resources, and participate in UNYCC events and initiatives.
         </p>
-        <div className="space-y-2 mt-auto">
-          <div className="flex items-center">
-            <UserCheck className="h-5 w-5 text-unblue mr-2" />
-            <span className="text-gray-600 text-sm">Access to resources and tools</span>
-          </div>
-          <div className="flex items-center">
-            <Users className="h-5 w-5 text-unblue mr-2" />
-            <span className="text-gray-600 text-sm">Connect with global youth network</span>
-          </div>
-          <div className="flex items-center">
-            <Calendar className="h-5 w-5 text-unblue mr-2" />
-            <span className="text-gray-600 text-sm">Participate in events and programs</span>
-          </div>
-        </div>
-      </div>
+        <Button variant="secondary">Learn More</Button>
+      </Card>
 
-      <div className="bg-ungray-light p-8 rounded-lg flex flex-col items-center text-center">
-        <div className="mb-4 bg-unblue/10 p-4 rounded-full">
-          <School className="h-8 w-8 text-unblue" />
-        </div>
-        <h3 className="text-xl font-semibold mb-2">Start a UNYCC Club</h3>
+      <Card className="p-6">
+        <Users className="w-10 h-10 text-unblue mb-4" />
+        <h3 className="text-xl font-semibold mb-2">Start a Club</h3>
         <p className="text-gray-600 mb-4">
-          Establish a UNYCC club at your school, university, or community and lead local initiatives.
+          Establish a UNYCC chapter at your school or in your community and lead local sustainability projects.
         </p>
-        <div className="space-y-2 mt-auto">
-          <div className="flex items-center">
-            <Globe className="h-5 w-5 text-unblue mr-2" />
-            <span className="text-gray-600 text-sm">Become part of global network</span>
-          </div>
-          <div className="flex items-center">
-            <Users className="h-5 w-5 text-unblue mr-2" />
-            <span className="text-gray-600 text-sm">Lead a team of changemakers</span>
-          </div>
-          <div className="flex items-center">
-            <Calendar className="h-5 w-5 text-unblue mr-2" />
-            <span className="text-gray-600 text-sm">Implement impactful projects</span>
-          </div>
-        </div>
-      </div>
+        <Button variant="secondary">Get Started</Button>
+      </Card>
 
-      <div className="bg-ungray-light p-8 rounded-lg flex flex-col items-center text-center">
-        <div className="mb-4 bg-unblue/10 p-4 rounded-full">
-          <Building className="h-8 w-8 text-unblue" />
-        </div>
-        <h3 className="text-xl font-semibold mb-2">Partner with UNYCC</h3>
+      <Card className="p-6">
+        <img
+          src="/lovable-uploads/sdg-innovation.jpg"
+          alt="SDG Innovation Challenge"
+          className="w-full h-48 object-cover rounded-lg mb-4"
+        />
+        <h3 className="text-xl font-semibold mb-2">SDG Innovation Challenge</h3>
         <p className="text-gray-600 mb-4">
-          Collaborate with UNYCC as an organization, institution, or business to support youth-led initiatives.
+          Join our global challenge to create innovative solutions for the Sustainable Development Goals. Work with peers worldwide to make a real impact.
         </p>
-        <div className="space-y-2 mt-auto">
-          <div className="flex items-center">
-            <Handshake className="h-5 w-5 text-unblue mr-2" />
-            <span className="text-gray-600 text-sm">Strategic collaborations</span>
-          </div>
-          <div className="flex items-center">
-            <Globe className="h-5 w-5 text-unblue mr-2" />
-            <span className="text-gray-600 text-sm">Global impact and visibility</span>
-          </div>
-          <div className="flex items-center">
-            <Users className="h-5 w-5 text-unblue mr-2" />
-            <span className="text-gray-600 text-sm">Support youth empowerment</span>
-          </div>
-        </div>
-      </div>
+        <Button variant="secondary">Participate</Button>
+      </Card>
+      
+      <Card className="p-6">
+        <Lightbulb className="w-10 h-10 text-unblue mb-4" />
+        <h3 className="text-xl font-semibold mb-2">Partnership</h3>
+        <p className="text-gray-600 mb-4">
+          Collaborate with UNYCC to amplify your organization's impact and support our mission of empowering youth for sustainable development.
+        </p>
+        <Button variant="secondary">Explore Partnership</Button>
+      </Card>
     </div>
   );
 };
