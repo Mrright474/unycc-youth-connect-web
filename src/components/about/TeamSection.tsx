@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Pen, Briefcase, Gavel } from "lucide-react";
+import { Pen, Briefcase, Gavel, Megaphone } from "lucide-react";
 
 const TeamSection = () => {
   const team = [
@@ -36,6 +35,13 @@ const TeamSection = () => {
       image: "/lovable-uploads/04289bb7-af35-4c17-a18e-988bc4921c86.png",
       bio: "Legal expert from Uganda ensuring compliance and providing strategic legal guidance.",
       icon: Gavel
+    },
+    {
+      name: "Akoragye Osbert",
+      title: "Director of Publicity",
+      image: "/lovable-uploads/89049959-a452-49e9-b37c-52c673ae30bb.png",
+      bio: "Dedicated communications professional from Uganda leading UNYCC's public relations and media engagement strategies.",
+      icon: Megaphone
     }
   ];
 
