@@ -39,10 +39,10 @@ const TeamSection = () => {
       icon: Gavel
     },
     {
-      name: "Akoragye Osbert",
-      title: "Director of Publicity",
-      image: "/lovable-uploads/89049959-a452-49e9-b37c-52c673ae30bb.png",
-      bio: "Dedicated communications professional from Uganda leading UNYCC's public relations and media engagement strategies.",
+      name: "Lwasa Abdul Bast",
+      title: "Director of Communications & Brand Manager",
+      image: "/lovable-uploads/b9724a5a-f8d4-471e-a536-e4f46205c521.png",
+      bio: "Strategic communications professional leading UNYCC's brand development and media engagement initiatives.",
       icon: Megaphone
     }
   ];
