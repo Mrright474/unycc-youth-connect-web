@@ -8,7 +8,6 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { countries } from "@/data/countries";
 import { sdgs } from "@/data/sdgs";
-import Map from '@/components/Map';
 
 const IndividualForm = () => {
   const { toast } = useToast();
@@ -124,10 +123,6 @@ const IndividualForm = () => {
             ))}
           </SelectContent>
         </Select>
-      </div>
-
-      <div className="mt-6">
-        <Map selectedCountry={formData.country} />
       </div>
 
       <div>
