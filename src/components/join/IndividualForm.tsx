@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { countries } from "@/data/countries";
 import { sdgs } from "@/data/sdgs";
+import Map from '@/components/Map';
 
 const IndividualForm = () => {
   const { toast } = useToast();
@@ -70,7 +71,7 @@ const IndividualForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label htmlFor="firstName">First Name</Label>
@@ -123,6 +124,10 @@ const IndividualForm = () => {
             ))}
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="mt-6">
+        <Map selectedCountry={formData.country} />
       </div>
 
       <div>

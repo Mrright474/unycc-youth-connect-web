@@ -3,10 +3,16 @@ import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { countries } from '@/data/countries';
+import { countryCoordinates } from '@/data/countryCoordinates';
 
-const Map = () => {
+interface MapProps {
+  selectedCountry?: string;
+}
+
+const Map = ({ selectedCountry }: MapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
+  const markers = useRef<mapboxgl.Marker[]>([]);
   
   useEffect(() => {
     if (!mapContainer.current) return;
@@ -26,21 +32,27 @@ const Map = () => {
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
     map.current.on('load', () => {
-      // Add markers for each country
+      // Add markers for each country that has coordinates
       countries.forEach(country => {
-        // You would need to add latitude and longitude for each country
-        // This is a simplified example
-        const marker = new mapboxgl.Marker()
-          .setLngLat([0, 0]) // Replace with actual coordinates
-          .setPopup(new mapboxgl.Popup().setHTML(`<h3>${country.name}</h3>`))
-          .addTo(map.current!);
+        const coords = countryCoordinates[country.code];
+        if (coords) {
+          const marker = new mapboxgl.Marker({
+            color: selectedCountry === country.code ? '#FF0000' : '#666666'
+          })
+            .setLngLat([coords.lng, coords.lat])
+            .setPopup(new mapboxgl.Popup().setHTML(`<h3>${country.name}</h3>`))
+            .addTo(map.current!);
+          
+          markers.current.push(marker);
+        }
       });
     });
 
     return () => {
+      markers.current.forEach(marker => marker.remove());
       map.current?.remove();
     };
-  }, []);
+  }, [selectedCountry]);
 
   return (
     <div className="relative w-full h-[400px] rounded-lg overflow-hidden">
