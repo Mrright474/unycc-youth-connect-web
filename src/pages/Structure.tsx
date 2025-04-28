@@ -1,7 +1,7 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Globe, MapPin, Building, School, Users } from "lucide-react";
+import Map from "@/components/Map";
 
 const Structure = () => {
   return (
@@ -213,13 +213,7 @@ const Structure = () => {
             </div>
 
             <div className="bg-unblue/5 p-8 rounded-lg max-w-5xl mx-auto">
-              <div className="aspect-w-16 aspect-h-9 relative overflow-hidden rounded-lg">
-                <div className="absolute inset-0 flex items-center justify-center bg-unblue/10">
-                  <p className="text-center text-gray-600">
-                    [Interactive map showing UNYCC's global presence would be displayed here]
-                  </p>
-                </div>
-              </div>
+              <Map />
 
               <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
