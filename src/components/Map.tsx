@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { countries } from '@/data/countries';
-import { countryCoordinates } from '@/data/countryCoordinates';
 
 interface MapProps {
   selectedCountry?: string;
@@ -31,23 +30,7 @@ const Map = ({ selectedCountry }: MapProps) => {
     // Add navigation controls
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-    map.current.on('load', () => {
-      // Add markers for each country that has coordinates
-      countries.forEach(country => {
-        const coords = countryCoordinates[country.code];
-        if (coords) {
-          const marker = new mapboxgl.Marker({
-            color: selectedCountry === country.code ? '#FF0000' : '#666666'
-          })
-            .setLngLat([coords.lng, coords.lat])
-            .setPopup(new mapboxgl.Popup().setHTML(`<h3>${country.name}</h3>`))
-            .addTo(map.current!);
-          
-          markers.current.push(marker);
-        }
-      });
-    });
-
+    // Clean up on unmount
     return () => {
       markers.current.forEach(marker => marker.remove());
       map.current?.remove();
