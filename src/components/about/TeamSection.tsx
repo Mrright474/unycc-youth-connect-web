@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Pen, Briefcase, Gavel, Megaphone } from "lucide-react";
+import { Pen, Briefcase, Gavel, Megaphone, FileText } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const TeamSection = () => {
@@ -44,6 +44,13 @@ const TeamSection = () => {
       image: "/lovable-uploads/b9724a5a-f8d4-471e-a536-e4f46205c521.png",
       bio: "Strategic communications professional leading UNYCC's brand development and media engagement initiatives.",
       icon: Megaphone
+    },
+    {
+      name: "Akoragye Osbert",
+      title: "Publications Officer",
+      image: "/lovable-uploads/d40da04a-513a-4800-b4e2-56404f202a6a.png",
+      bio: "Communications specialist from Uganda responsible for managing UNYCC's publications and digital content strategy.",
+      icon: FileText
     }
   ];
 
