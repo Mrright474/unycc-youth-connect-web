@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Globe, MapPin, Building, School, Users } from "lucide-react";
-import Map from "@/components/Map";
 
 const Structure = () => {
   // Additional effect to ensure page scrolls to top when component mounts
@@ -209,7 +208,7 @@ const Structure = () => {
           </div>
         </section>
 
-        {/* UNYCC Programs Map */}
+        {/* UNYCC Global Presence - Replaced Map with Static Info */}
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12">
@@ -220,25 +219,33 @@ const Structure = () => {
             </div>
 
             <div className="bg-unblue/5 p-8 rounded-lg max-w-5xl mx-auto">
-              <Map />
-
-              <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center">
-                  <h4 className="font-semibold text-unblue text-2xl">Africa</h4>
-                  <p className="text-gray-600">19 Countries</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div className="text-center p-6 bg-white rounded-lg shadow-sm">
+                  <h4 className="font-semibold text-unblue text-2xl mb-2">Africa</h4>
+                  <p className="text-gray-600 mb-4">19 Countries</p>
+                  <p className="text-sm text-gray-500">Including Kenya, Nigeria, South Africa, Ghana, and Morocco</p>
                 </div>
-                <div className="text-center">
-                  <h4 className="font-semibold text-unblue text-2xl">Americas</h4>
-                  <p className="text-gray-600">15 Countries</p>
+                <div className="text-center p-6 bg-white rounded-lg shadow-sm">
+                  <h4 className="font-semibold text-unblue text-2xl mb-2">Americas</h4>
+                  <p className="text-gray-600 mb-4">15 Countries</p>
+                  <p className="text-sm text-gray-500">Including USA, Canada, Brazil, Mexico, and Argentina</p>
                 </div>
-                <div className="text-center">
-                  <h4 className="font-semibold text-unblue text-2xl">Asia-Pacific</h4>
-                  <p className="text-gray-600">24 Countries</p>
+                <div className="text-center p-6 bg-white rounded-lg shadow-sm">
+                  <h4 className="font-semibold text-unblue text-2xl mb-2">Asia-Pacific</h4>
+                  <p className="text-gray-600 mb-4">24 Countries</p>
+                  <p className="text-sm text-gray-500">Including India, China, Japan, Australia, and Indonesia</p>
                 </div>
-                <div className="text-center">
-                  <h4 className="font-semibold text-unblue text-2xl">Europe</h4>
-                  <p className="text-gray-600">17 Countries</p>
+                <div className="text-center p-6 bg-white rounded-lg shadow-sm">
+                  <h4 className="font-semibold text-unblue text-2xl mb-2">Europe</h4>
+                  <p className="text-gray-600 mb-4">17 Countries</p>
+                  <p className="text-sm text-gray-500">Including UK, Germany, France, Spain, and Italy</p>
                 </div>
+              </div>
+              
+              <div className="text-center mt-8">
+                <p className="text-lg font-medium text-gray-700">
+                  Our growing network continues to expand, bringing youth together to address the world's most pressing challenges.
+                </p>
               </div>
             </div>
           </div>
