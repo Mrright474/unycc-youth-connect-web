@@ -1,9 +1,16 @@
+
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Globe, MapPin, Building, School, Users } from "lucide-react";
 import Map from "@/components/Map";
 
 const Structure = () => {
+  // Additional effect to ensure page scrolls to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
