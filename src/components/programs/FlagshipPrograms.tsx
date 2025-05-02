@@ -2,12 +2,20 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FlagshipProgram } from "@/data/programsData";
+import { useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface FlagshipProgramsProps {
   programs: FlagshipProgram[];
 }
 
 const FlagshipPrograms = ({ programs }: FlagshipProgramsProps) => {
+  const [imagesLoaded, setImagesLoaded] = useState<{[key: string]: boolean}>({});
+  
+  const handleImageLoad = (index: number) => {
+    setImagesLoaded(prev => ({...prev, [index]: true}));
+  };
+
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4 md:px-6">
@@ -26,11 +34,17 @@ const FlagshipPrograms = ({ programs }: FlagshipProgramsProps) => {
                 index % 2 !== 0 ? 'lg:flex-row-reverse' : ''
               }`}
             >
-              <div className="lg:w-1/2">
+              <div className="lg:w-1/2 relative">
+                {!imagesLoaded[index] && (
+                  <Skeleton className="w-full h-64 md:h-80 rounded-lg" />
+                )}
                 <img 
                   src={program.image} 
                   alt={program.title} 
-                  className="w-full h-64 md:h-80 object-contain rounded-lg shadow-md bg-white p-4"
+                  className="w-full h-64 md:h-80 object-cover rounded-lg shadow-md bg-white"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  onLoad={() => handleImageLoad(index)}
+                  style={{ display: imagesLoaded[index] ? 'block' : 'none' }}
                 />
               </div>
               <div className="lg:w-1/2">

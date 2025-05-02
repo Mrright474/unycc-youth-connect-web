@@ -20,7 +20,7 @@ export const flagshipPrograms: FlagshipProgram[] = [
     title: "SDG Ambassadors Program",
     description: "Training young leaders to become effective advocates for sustainable development in their communities.",
     icon: "/lovable-uploads/5834fedb-aa6c-421b-91b8-d17a45eb3374.png",
-    image: "/lovable-uploads/38d71279-24da-43e3-a208-757cc8ea7eb0.png",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop",
     features: [
       "Comprehensive SDG training",
       "Leadership development",
@@ -33,7 +33,7 @@ export const flagshipPrograms: FlagshipProgram[] = [
     title: "Youth Innovation Hub",
     description: "A platform for young innovators to develop and implement solutions for sustainable development challenges.",
     icon: "/lovable-uploads/46b55093-0f47-444f-9e15-c55c8afd3197.png",
-    image: "/lovable-uploads/24b0ae3b-a291-4b67-8d6d-4af0b0930366.png",
+    image: "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?q=80&w=800&auto=format&fit=crop",
     features: [
       "Innovation workshops",
       "Mentorship support",

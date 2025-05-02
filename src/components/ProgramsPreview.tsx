@@ -2,8 +2,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from "react";
 
 const ProgramsPreview = () => {
+  const [imagesLoaded, setImagesLoaded] = useState<{[key: string]: boolean}>({});
+  
   const programs = [
     {
       title: "Youth Leadership Academy",
@@ -14,7 +18,7 @@ const ProgramsPreview = () => {
     {
       title: "SDG Innovation Challenge",
       description: "An annual competition that challenges youth to develop innovative solutions addressing specific SDG targets.",
-      image: "/lovable-uploads/46b55093-0f47-444f-9e15-c55c8afd3197.png",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=800&auto=format&fit=crop",
       link: "/programs/innovation-challenge"
     },
     {
@@ -24,6 +28,10 @@ const ProgramsPreview = () => {
       link: "/programs/action-projects"
     }
   ];
+
+  const handleImageLoad = (index: number) => {
+    setImagesLoaded(prev => ({...prev, [index]: true}));
+  };
 
   return (
     <section className="py-16 bg-white">
@@ -41,11 +49,19 @@ const ProgramsPreview = () => {
               key={index} 
               className="bg-white border border-gray-200 rounded-lg overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-md"
             >
-              <img 
-                src={program.image} 
-                alt={program.title} 
-                className="w-full h-48 object-cover"
-              />
+              <div className="relative h-48 w-full">
+                {!imagesLoaded[index] && (
+                  <Skeleton className="absolute inset-0 w-full h-full" />
+                )}
+                <img 
+                  src={program.image} 
+                  alt={program.title} 
+                  className="w-full h-full object-cover"
+                  loading={index < 2 ? "eager" : "lazy"} 
+                  onLoad={() => handleImageLoad(index)}
+                  style={{ display: imagesLoaded[index] ? 'block' : 'none' }}
+                />
+              </div>
               <div className="p-6">
                 <h3 className="text-xl font-semibold mb-2">{program.title}</h3>
                 <p className="text-gray-600 mb-4">{program.description}</p>

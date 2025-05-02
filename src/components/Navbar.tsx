@@ -32,6 +32,7 @@ const Navbar = () => {
               src="/lovable-uploads/1ddde308-f2d4-42ba-be9d-a316584451ce.png"
               alt="UNYCC Logo"
               className="h-16 w-auto object-contain hover:opacity-80 transition-colors bg-white p-2 rounded-lg shadow-sm"
+              loading="eager" // Use eager loading for logo
             />
           </Link>
 
