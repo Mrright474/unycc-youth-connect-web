@@ -3,8 +3,17 @@ import { ArrowRight } from "lucide-react";
 
 const DonationHero = () => {
   return (
-    <section className="bg-unblue text-white py-16">
-      <div className="container mx-auto px-4 md:px-6 text-center">
+    <section className="bg-unblue text-white py-16 relative overflow-hidden">
+      {/* Semi-transparent overlay image */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/lovable-uploads/5834fedb-aa6c-421b-91b8-d17a45eb3374.png" 
+          alt="Youth collaboration background" 
+          className="w-full h-full object-cover opacity-20"
+        />
+      </div>
+      
+      <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Support Our Mission</h1>
         <p className="text-xl max-w-3xl mx-auto mb-8">
           Your contribution helps empower youth leaders around the world to drive sustainable change 
