@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import Hero from "@/components/Hero";
 import HomeAbout from "@/components/HomeAbout";
 import JoinCTA from "@/components/JoinCTA";
@@ -9,6 +10,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
