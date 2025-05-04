@@ -10,6 +10,7 @@ import Join from "./pages/Join";
 import Structure from "./pages/Structure";
 import Programs from "./pages/Programs";
 import Contact from "./pages/Contact";
+import Donations from "./pages/Donations";
 import LearnMore from "./pages/LearnMore";
 import NotFound from "./pages/NotFound";
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/structure" element={<Structure />} />
           <Route path="/programs" element={<Programs />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/donations" element={<Donations />} />
           <Route path="/join/:slug" element={<LearnMore />} />
           <Route path="/programs/:slug" element={<LearnMore />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

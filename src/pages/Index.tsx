@@ -4,6 +4,7 @@ import HomeAbout from "@/components/HomeAbout";
 import JoinCTA from "@/components/JoinCTA";
 import ProgramsPreview from "@/components/ProgramsPreview";
 import Stats from "@/components/Stats";
+import DonationCTA from "@/components/DonationCTA";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -16,6 +17,7 @@ const Index = () => {
         <HomeAbout />
         <Stats />
         <ProgramsPreview />
+        <DonationCTA />
         <JoinCTA />
       </main>
       <Footer />
