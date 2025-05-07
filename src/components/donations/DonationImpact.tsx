@@ -42,7 +42,7 @@ const DonationImpact = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {impactData.map((item, index) => (
-            <Card key={index} className={`${item.color} border-none shadow-sm`}>
+            <Card key={index} className={`${item.color} border-none shadow-sm hover:shadow-md transition-all`}>
               <CardContent className="p-6 flex flex-col items-center">
                 <div className="w-16 h-16 mb-4 rounded-full bg-white/80 p-2 flex items-center justify-center">
                   <img 
