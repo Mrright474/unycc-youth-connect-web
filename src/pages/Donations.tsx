@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DonationHero from "@/components/donations/DonationHero";
 import DonationOptions from "@/components/donations/DonationOptions";
-import DonationProjects from "@/components/donations/DonationProjects";
 import DonationFAQ from "@/components/donations/DonationFAQ";
 import DonationImpact from "@/components/donations/DonationImpact";
 
@@ -21,7 +20,6 @@ const Donations = () => {
         <DonationHero />
         <DonationOptions />
         <DonationImpact />
-        <DonationProjects />
         <DonationFAQ />
       </main>
       <Footer />
