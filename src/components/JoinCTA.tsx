@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { UserPlus, Building, School } from "lucide-react";
+import { UserPlus, Building, School, ShieldCheck } from "lucide-react";
 
 const JoinCTA = () => {
   return (
@@ -59,6 +59,13 @@ const JoinCTA = () => {
           <Button size="lg" className="btn-primary" asChild>
             <Link to="/join">Explore All Ways to Join</Link>
           </Button>
+          
+          <div className="mt-8 flex justify-center">
+            <Link to="/admin" className="flex items-center text-sm text-gray-500 hover:text-unblue">
+              <ShieldCheck className="h-4 w-4 mr-1" />
+              Admin Dashboard
+            </Link>
+          </div>
         </div>
       </div>
     </section>

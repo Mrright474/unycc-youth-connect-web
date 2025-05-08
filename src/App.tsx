@@ -13,6 +13,7 @@ import Programs from "./pages/Programs";
 import Contact from "./pages/Contact";
 import Donations from "./pages/Donations";
 import LearnMore from "./pages/LearnMore";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 // Create a client
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/donations" element={<Donations />} />
             <Route path="/join/:slug" element={<LearnMore />} />
             <Route path="/programs/:slug" element={<LearnMore />} />
+            <Route path="/admin" element={<Admin />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
