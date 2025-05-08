@@ -1,5 +1,6 @@
+
 import { Link } from "react-router-dom";
-import { Mail, Facebook, Twitter, Instagram, Linkedin, Globe, Phone } from "lucide-react";
+import { Mail, Facebook, Twitter, Instagram, Linkedin, Globe, Phone, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
@@ -144,6 +145,9 @@ const Footer = () => {
             <div className="mt-4 md:mt-0 flex space-x-4 text-sm">
               <Link to="/privacy" className="text-gray-500 hover:text-unblue">Privacy Policy</Link>
               <Link to="/terms" className="text-gray-500 hover:text-unblue">Terms of Service</Link>
+              <Link to="/admin" className="text-gray-500 hover:text-unblue" aria-label="Admin Access">
+                <Shield size={16} className="hover:text-unblue transition-colors" />
+              </Link>
             </div>
           </div>
         </div>
