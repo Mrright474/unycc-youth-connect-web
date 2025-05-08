@@ -1,54 +1,21 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import { CreditCard, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import DonationAmountSelector from "./options/DonationAmountSelector";
 import ContactDonationDialog from "./options/ContactDonationDialog";
-import PaymentDialog from "./options/PaymentDialog";
-import SuccessDialog from "./options/SuccessDialog";
 import PaymentMethodInfo from "./options/PaymentMethodInfo";
 
 const DonationOptions = () => {
-  const { toast } = useToast();
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState<string>("");
   const [contactDialogOpen, setContactDialogOpen] = useState(false);
-  const [paymentDialogOpen, setPaymentDialogOpen] = useState(false);
-  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
   const handleAmountSelect = (amount: number | null) => {
     setSelectedAmount(amount);
     if (amount === null) {
       setCustomAmount("");
     }
-  };
-
-  const getFinalAmount = () => {
-    if (selectedAmount !== null) {
-      return selectedAmount;
-    }
-    if (customAmount) {
-      return parseFloat(customAmount);
-    }
-    return 0;
-  };
-
-  const handlePaymentClick = () => {
-    const amount = getFinalAmount();
-    if (!amount || amount < 1) {
-      toast({
-        title: "Invalid amount",
-        description: "Please select or enter a valid donation amount.",
-        variant: "destructive",
-      });
-      return;
-    }
-    setPaymentDialogOpen(true);
-  };
-
-  const handlePaymentSuccess = () => {
-    setSuccessDialogOpen(true);
   };
 
   return (
@@ -66,22 +33,10 @@ const DonationOptions = () => {
             onCustomAmountChange={setCustomAmount}
           />
           
-          <div className="space-y-6">
+          <div className="space-y-6 mt-6">
             <Button 
-              onClick={handlePaymentClick} 
-              className="w-full py-6 text-lg bg-unblue hover:bg-unblue-dark"
-            >
-              <CreditCard className="mr-2" /> Donate Now
-            </Button>
-            
-            <div className="text-center">
-              <span className="text-gray-500">or</span>
-            </div>
-            
-            <Button 
-              variant="outline" 
+              onClick={() => setContactDialogOpen(true)} 
               className="w-full py-6 text-lg border-unblue text-unblue hover:bg-unblue/5"
-              onClick={() => setContactDialogOpen(true)}
             >
               <Mail className="mr-2" /> Contact Us to Donate
             </Button>
@@ -91,23 +46,10 @@ const DonationOptions = () => {
         </div>
       </div>
 
-      {/* Dialogs */}
+      {/* Dialog */}
       <ContactDonationDialog 
         open={contactDialogOpen} 
         onOpenChange={setContactDialogOpen} 
-      />
-      
-      <PaymentDialog 
-        open={paymentDialogOpen} 
-        onOpenChange={setPaymentDialogOpen}
-        amount={getFinalAmount()}
-        onSuccess={handlePaymentSuccess}
-      />
-      
-      <SuccessDialog 
-        open={successDialogOpen} 
-        onOpenChange={setSuccessDialogOpen}
-        amount={getFinalAmount()}
       />
     </section>
   );
