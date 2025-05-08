@@ -1,5 +1,5 @@
 
-import { ShieldCheck, Lock, CreditCard, PayPal, Bitcoin, DollarSign } from "lucide-react";
+import { ShieldCheck, Lock, CreditCard, DollarSign, Check, CreditCardIcon } from "lucide-react";
 
 const PaymentMethodInfo = () => {
   return (
@@ -15,7 +15,7 @@ const PaymentMethodInfo = () => {
             <span>Credit Card</span>
           </div>
           <div className="flex items-center justify-center h-10 px-4 bg-[#0070E0] rounded-md text-white font-medium hover:bg-[#005BBF] transition-colors">
-            <PayPal className="h-5 w-5 mr-2" />
+            <CreditCardIcon className="h-5 w-5 mr-2" />
             <span>PayPal</span>
           </div>
           <div className="flex items-center justify-center h-10 px-4 bg-black rounded-md text-white font-medium hover:bg-gray-800 transition-colors">
@@ -23,9 +23,11 @@ const PaymentMethodInfo = () => {
             <span>Express Checkout</span>
           </div>
           <div className="flex items-center justify-center h-10 px-4 bg-gray-100 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+            <Check className="h-5 w-5 mr-2" />
             Apple Pay
           </div>
           <div className="flex items-center justify-center h-10 px-4 bg-gray-100 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+            <Check className="h-5 w-5 mr-2" />
             Google Pay
           </div>
         </div>
