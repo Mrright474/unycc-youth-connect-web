@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Mail, Facebook, Twitter, Instagram, Linkedin, Globe, Phone, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +10,7 @@ const Footer = () => {
   const { toast } = useToast();
   const [email, setEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(false);
 
   const handleSubscribe = async () => {
     if (!email) {
@@ -53,10 +53,16 @@ const Footer = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
+            {!logoLoaded && (
+              <div className="h-20 w-auto bg-gray-200 rounded-lg animate-pulse mb-4"></div>
+            )}
             <img
               src="/lovable-uploads/1ddde308-f2d4-42ba-be9d-a316584451ce.png"
               alt="UNYCC Logo"
               className="h-20 w-auto object-contain mb-4 hover:opacity-80 transition-colors bg-white p-3 rounded-lg shadow-sm"
+              onLoad={() => setLogoLoaded(true)}
+              style={{ display: logoLoaded ? 'block' : 'none' }}
+              loading="eager"
             />
             <h3 className="text-xl font-bold text-unblue mb-4">UNYCC</h3>
             <p className="text-gray-600 mb-4">
