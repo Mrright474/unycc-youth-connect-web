@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Search, Filter, RefreshCcw } from "lucide-react";
+import { Search, RefreshCcw, AlertCircle, CheckCircle, XCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 interface Member {
   id: string;
@@ -24,25 +26,62 @@ const AdminMembers = () => {
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const [retryCount, setRetryCount] = useState<number>(0);
+  const [connectionStatus, setConnectionStatus] = useState<"checking" | "connected" | "error">("checking");
   const { toast } = useToast();
 
-  const fetchMembers = async () => {
+  const fetchMembers = async (retry = 0) => {
     setLoading(true);
+    setError(null);
+    setConnectionStatus("checking");
+    
     try {
+      // Get admin token from localStorage
+      const adminToken = localStorage.getItem("admin_token");
+      if (!adminToken) {
+        throw new Error("Admin authentication required");
+      }
+
+      // Test connection to Supabase
+      const { error: pingError } = await supabase.from('members').select('count');
+      if (pingError) throw pingError;
+      
+      setConnectionStatus("connected");
+      
       const { data, error } = await supabase
         .from('members')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
+      
       setMembers(data || []);
-    } catch (error) {
+      if (error) {
+        console.error("Supabase error details:", error);
+        throw error;
+      }
+    } catch (error: any) {
       console.error('Error fetching members:', error);
-      toast({
-        title: "Error",
-        description: "Failed to fetch members data",
-        variant: "destructive",
-      });
+      
+      setConnectionStatus("error");
+      
+      // Implement retry with exponential backoff
+      if (retry < 3) {
+        setError(`Connection issue. Retrying (${retry + 1}/3)...`);
+        const backoffTime = Math.pow(2, retry) * 1000; // Exponential backoff: 1s, 2s, 4s
+        setTimeout(() => {
+          setRetryCount(retry + 1);
+          fetchMembers(retry + 1);
+        }, backoffTime);
+      } else {
+        setError(`Failed to load members: ${error.message || 'Unknown error'}`);
+        toast({
+          title: "Error",
+          description: "Failed to fetch members data after multiple attempts",
+          variant: "destructive",
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -71,6 +110,12 @@ const AdminMembers = () => {
 
   const updateMemberStatus = async (memberId: string, newStatus: string) => {
     try {
+      // Get admin token from localStorage
+      const adminToken = localStorage.getItem("admin_token");
+      if (!adminToken) {
+        throw new Error("Admin authentication required");
+      }
+      
       const { error } = await supabase
         .from('members')
         .update({ status: newStatus })
@@ -84,14 +129,49 @@ const AdminMembers = () => {
       });
       
       fetchMembers(); // Refresh the member list
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating member status:', error);
       toast({
         title: "Error",
-        description: "Failed to update member status",
+        description: `Failed to update member status: ${error.message}`,
         variant: "destructive",
       });
     }
+  };
+
+  const renderConnectionStatus = () => {
+    if (connectionStatus === "connected") {
+      return (
+        <Alert className="bg-green-50 border-green-200 mb-6">
+          <CheckCircle className="h-4 w-4 text-green-500" />
+          <AlertTitle>Connected</AlertTitle>
+          <AlertDescription>
+            Successfully connected to Supabase database.
+          </AlertDescription>
+        </Alert>
+      );
+    }
+    
+    if (connectionStatus === "error") {
+      return (
+        <Alert className="bg-red-50 border-red-200 mb-6" variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Connection Error</AlertTitle>
+          <AlertDescription>
+            <p className="mb-2">{error}</p>
+            <p>Possible causes:</p>
+            <ul className="list-disc pl-5 mt-2">
+              <li>Network connectivity issues</li>
+              <li>CORS policy restrictions</li>
+              <li>Row-Level Security (RLS) policy restrictions</li>
+              <li>Temporary Supabase service disruption</li>
+            </ul>
+          </AlertDescription>
+        </Alert>
+      );
+    }
+    
+    return null;
   };
 
   return (
@@ -106,14 +186,31 @@ const AdminMembers = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Button onClick={fetchMembers} variant="outline" className="w-full md:w-auto">
+        <Button 
+          onClick={() => fetchMembers()} 
+          variant="outline" 
+          className="w-full md:w-auto"
+        >
           <RefreshCcw size={16} className="mr-2" /> Refresh
         </Button>
       </div>
 
+      {renderConnectionStatus()}
+
       {loading ? (
-        <div className="text-center py-8">Loading members data...</div>
-      ) : filteredMembers.length === 0 ? (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <Card key={i} className="overflow-hidden">
+              <CardContent className="p-6 animate-pulse">
+                <div className="h-5 bg-gray-200 rounded w-1/3 mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded w-2/3 mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
+                <div className="h-8 bg-gray-200 rounded w-full mt-4"></div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : filteredMembers.length === 0 && !error ? (
         <div className="text-center py-8">No members found</div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
