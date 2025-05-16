@@ -43,42 +43,64 @@ const AdminMembers = () => {
         throw new Error("Admin authentication required");
       }
 
+      // Configure a timeout to handle network issues
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+
       // Test connection to Supabase
-      const { error: pingError } = await supabase.from('members').select('count');
+      const { error: pingError } = await supabase
+        .from('members')
+        .select('count')
+        .abortSignal(controller.signal);
+
+      clearTimeout(timeoutId);
+      
       if (pingError) throw pingError;
       
       setConnectionStatus("connected");
       
+      // Set up another timeout for the main query
+      const dataController = new AbortController();
+      const dataTimeoutId = setTimeout(() => dataController.abort(), 10000); // 10 second timeout
+      
       const { data, error } = await supabase
         .from('members')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .abortSignal(dataController.signal);
+
+      clearTimeout(dataTimeoutId);
 
       if (error) throw error;
       
       setMembers(data || []);
-      if (error) {
-        console.error("Supabase error details:", error);
-        throw error;
-      }
     } catch (error: any) {
       console.error('Error fetching members:', error);
       
       setConnectionStatus("error");
       
+      // Determine if this is a timeout error
+      const isTimeoutError = error.name === "AbortError" || 
+                            error.message?.includes("timeout") || 
+                            error.message?.includes("abort");
+      
+      const errorMessage = isTimeoutError 
+        ? "Network request timed out. Please check your connection."
+        : error.message || 'Unknown error';
+      
       // Implement retry with exponential backoff
       if (retry < 3) {
-        setError(`Connection issue. Retrying (${retry + 1}/3)...`);
-        const backoffTime = Math.pow(2, retry) * 1000; // Exponential backoff: 1s, 2s, 4s
+        setError(`Connection issue: ${errorMessage}. Retrying (${retry + 1}/3)...`);
+        const backoffTime = Math.pow(2, retry) * 1500; // Exponential backoff: 1.5s, 3s, 6s
         setTimeout(() => {
           setRetryCount(retry + 1);
           fetchMembers(retry + 1);
         }, backoffTime);
       } else {
-        setError(`Failed to load members: ${error.message || 'Unknown error'}`);
+        setError(`Failed to load members: ${errorMessage}`);
         toast({
           title: "Error",
-          description: "Failed to fetch members data after multiple attempts",
+          description: "Failed to fetch members data after multiple attempts. Please try again later.",
           variant: "destructive",
         });
       }
@@ -115,11 +137,17 @@ const AdminMembers = () => {
       if (!adminToken) {
         throw new Error("Admin authentication required");
       }
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
       
       const { error } = await supabase
         .from('members')
         .update({ status: newStatus })
-        .eq('id', memberId);
+        .eq('id', memberId)
+        .abortSignal(controller.signal);
+      
+      clearTimeout(timeoutId);
       
       if (error) throw error;
       
@@ -142,8 +170,8 @@ const AdminMembers = () => {
   const renderConnectionStatus = () => {
     if (connectionStatus === "connected") {
       return (
-        <Alert className="bg-green-50 border-green-200 mb-6">
-          <CheckCircle className="h-4 w-4 text-green-500" />
+        <Alert variant="success" className="mb-6">
+          <CheckCircle className="h-4 w-4" />
           <AlertTitle>Connected</AlertTitle>
           <AlertDescription>
             Successfully connected to Supabase database.
@@ -154,18 +182,26 @@ const AdminMembers = () => {
     
     if (connectionStatus === "error") {
       return (
-        <Alert className="bg-red-50 border-red-200 mb-6" variant="destructive">
+        <Alert variant="destructive" className="mb-6">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Connection Error</AlertTitle>
           <AlertDescription>
             <p className="mb-2">{error}</p>
             <p>Possible causes:</p>
-            <ul className="list-disc pl-5 mt-2">
+            <ul className="list-disc pl-5 mt-2 mb-4">
               <li>Network connectivity issues</li>
               <li>CORS policy restrictions</li>
               <li>Row-Level Security (RLS) policy restrictions</li>
               <li>Temporary Supabase service disruption</li>
             </ul>
+            <Button 
+              onClick={() => fetchMembers()} 
+              variant="outline" 
+              size="sm" 
+              className="mt-2"
+            >
+              <RefreshCcw size={14} className="mr-2" /> Retry Connection
+            </Button>
           </AlertDescription>
         </Alert>
       );
