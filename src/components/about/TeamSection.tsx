@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Pen, Briefcase, Gavel, Megaphone, FileText } from "lucide-react";
+import { Pen, Briefcase, Gavel, Megaphone, FileText, GraduationCap, Globe } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const TeamSection = () => {
@@ -30,6 +30,20 @@ const TeamSection = () => {
       image: "/lovable-uploads/9be39adb-395c-4a89-b163-3d842cf95a09.png",
       bio: "Strategic partnership builder from Uganda fostering global collaborations for youth development.",
       icon: Briefcase
+    },
+    {
+      name: "Katamba Collins Mark",
+      title: "Director of Programs",
+      image: "/lovable-uploads/0d9ebeb9-54ff-4596-b10d-bf179af48bda.png",
+      bio: "Dynamic program leader coordinating UNYCC's initiatives and ensuring their effective implementation across regions.",
+      icon: GraduationCap
+    },
+    {
+      name: "Israel Mbabazi",
+      title: "PR Officer & Linguist",
+      image: "/lovable-uploads/069cd76e-8d9a-4e04-80dc-bd539303abdb.png",
+      bio: "Multilingual communications professional from Congo with proficiency in 5 languages, leading UNYCC's international public relations efforts.",
+      icon: Globe
     },
     {
       name: "Buule Paul",
