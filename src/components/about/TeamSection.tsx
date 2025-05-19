@@ -2,6 +2,8 @@
 import React from 'react';
 import { Pen, Briefcase, Gavel, Megaphone, FileText, GraduationCap, Globe } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { OptimizedImage } from "@/components/ui/optimized-image";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const TeamSection = () => {
   const team = [
@@ -82,14 +84,18 @@ const TeamSection = () => {
           {team.map((member, index) => (
             <div key={index} className="text-center group">
               <div className="mb-4 relative mx-auto w-48 h-48 overflow-hidden rounded-full shadow-lg transition-transform transform group-hover:scale-105">
-                <Avatar className="w-full h-full">
-                  <AvatarImage 
-                    src={member.image} 
-                    alt={member.name}
-                    className="w-full h-full object-cover" 
-                  />
-                  <AvatarFallback>{member.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                </Avatar>
+                {/* Replace Avatar with OptimizedImage for better control */}
+                <div className="w-full h-full">
+                  <AspectRatio ratio={1} className="w-full h-full">
+                    <OptimizedImage
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover object-center"
+                      priority={member.title === "Director of Programs" || member.title === "PR Officer & Linguist"}
+                      skeletonClassName="w-full h-full rounded-full"
+                    />
+                  </AspectRatio>
+                </div>
               </div>
               <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
               <div className="flex items-center justify-center gap-2 mb-2">
