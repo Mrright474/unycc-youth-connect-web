@@ -97,11 +97,12 @@ const TeamSection = () => {
                       src={member.image}
                       alt={member.name}
                       className={`w-full h-full object-cover ${
-                        member.title === "PR Officer & Linguist" || 
                         member.title === "Global Director for Youth Empowerment and Cultural Diplomacy" ||
                         member.title === "Director of Programs"
                           ? "object-top scale-110"
-                          : "object-center"
+                          : member.title === "PR Officer & Linguist"
+                            ? "object-center scale-125"  
+                            : "object-center"
                       }`}
                       priority={
                         member.title === "Director of Programs" || 
