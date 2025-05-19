@@ -91,14 +91,23 @@ const TeamSection = () => {
           {team.map((member, index) => (
             <div key={index} className="text-center group">
               <div className="mb-4 relative mx-auto w-48 h-48 overflow-hidden rounded-full shadow-lg transition-transform transform group-hover:scale-105">
-                {/* Replace Avatar with OptimizedImage for better control */}
                 <div className="w-full h-full">
                   <AspectRatio ratio={1} className="w-full h-full">
                     <OptimizedImage
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover object-center"
-                      priority={member.title === "Director of Programs" || member.title === "PR Officer & Linguist" || member.title === "Global Director for Youth Empowerment and Cultural Diplomacy"}
+                      className={`w-full h-full object-cover ${
+                        member.title === "PR Officer & Linguist" || 
+                        member.title === "Global Director for Youth Empowerment and Cultural Diplomacy" ||
+                        member.title === "Director of Programs"
+                          ? "object-top scale-110"
+                          : "object-center"
+                      }`}
+                      priority={
+                        member.title === "Director of Programs" || 
+                        member.title === "PR Officer & Linguist" || 
+                        member.title === "Global Director for Youth Empowerment and Cultural Diplomacy"
+                      }
                       skeletonClassName="w-full h-full rounded-full"
                     />
                   </AspectRatio>
