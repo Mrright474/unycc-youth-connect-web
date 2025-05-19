@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Pen, Briefcase, Gavel, Megaphone, FileText, GraduationCap, Globe } from "lucide-react";
+import { Pen, Briefcase, Gavel, Megaphone, FileText, GraduationCap, Globe, Heart } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -39,6 +39,13 @@ const TeamSection = () => {
       image: "/lovable-uploads/0d9ebeb9-54ff-4596-b10d-bf179af48bda.png",
       bio: "Dynamic program leader coordinating UNYCC's initiatives and ensuring their effective implementation across regions.",
       icon: GraduationCap
+    },
+    {
+      name: "Nassuna Husinah",
+      title: "Global Director for Youth Empowerment and Cultural Diplomacy",
+      image: "/lovable-uploads/e3323111-e096-4beb-8c42-420645213ae8.png",
+      bio: "Healthcare professional and founder of the Husinah Hope Foundation, dedicated to mentoring and educating young people while fostering community involvement to help them achieve their maximum potential.",
+      icon: Heart
     },
     {
       name: "Israel Mbabazi",
@@ -91,7 +98,7 @@ const TeamSection = () => {
                       src={member.image}
                       alt={member.name}
                       className="w-full h-full object-cover object-center"
-                      priority={member.title === "Director of Programs" || member.title === "PR Officer & Linguist"}
+                      priority={member.title === "Director of Programs" || member.title === "PR Officer & Linguist" || member.title === "Global Director for Youth Empowerment and Cultural Diplomacy"}
                       skeletonClassName="w-full h-full rounded-full"
                     />
                   </AspectRatio>
