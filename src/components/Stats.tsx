@@ -61,10 +61,10 @@ const StatCounter = ({ label, value, suffix = "", duration = 2000 }: StatProps) 
 
 const Stats = () => {
   const stats = [
-    { label: "Countries", value: 75, suffix: "+" },
-    { label: "Active Clubs", value: 1250, suffix: "+" },
-    { label: "Youth Members", value: 25000, suffix: "+" },
-    { label: "Projects Completed", value: 3600, suffix: "+" },
+    { label: "Youth-led Projects", value: 120, suffix: "+" },
+    { label: "Countries Reached", value: 45, suffix: "" },
+    { label: "Youth Engaged", value: 15000, suffix: "+" },
+    { label: "SDGs Addressed", value: 8, suffix: "" },
   ];
   
   return (
@@ -73,7 +73,8 @@ const Stats = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Global Impact</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            UNYCC continues to grow and make a difference around the world through our network of youth leaders.
+            Through our programs and youth-led initiatives, we're making measurable progress 
+            on sustainable development goals around the world.
           </p>
         </div>
         
