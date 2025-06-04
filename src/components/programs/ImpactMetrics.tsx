@@ -6,9 +6,10 @@ interface StatProps {
   value: number;
   suffix?: string;
   duration?: number;
+  icon?: string;
 }
 
-const StatCounter = ({ label, value, suffix = "", duration = 2000 }: StatProps) => {
+const StatCounter = ({ label, value, suffix = "", duration = 2000, icon }: StatProps) => {
   const [count, setCount] = useState(0);
   const countRef = useRef<HTMLSpanElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -51,6 +52,7 @@ const StatCounter = ({ label, value, suffix = "", duration = 2000 }: StatProps) 
   
   return (
     <div className="text-center">
+      {icon && <div className="text-4xl mb-3">{icon}</div>}
       <div className="text-4xl font-bold text-unblue mb-2">
         <span ref={countRef}>{count}</span>{suffix}
       </div>
@@ -61,10 +63,10 @@ const StatCounter = ({ label, value, suffix = "", duration = 2000 }: StatProps) 
 
 const ImpactMetrics = () => {
   const stats = [
-    { label: "Youth-led Projects", value: 120, suffix: "+" },
-    { label: "Countries Reached", value: 45, suffix: "" },
-    { label: "Youth Engaged", value: 15000, suffix: "+" },
-    { label: "SDGs Addressed", value: 8, suffix: "" },
+    { label: "Youth-led Projects", value: 120, suffix: "+", icon: "🌱" },
+    { label: "Countries Reached", value: 45, suffix: "", icon: "🌍" },
+    { label: "Youth Engaged", value: 15000, suffix: "+", icon: "👥" },
+    { label: "SDGs Addressed", value: 8, suffix: "", icon: "🎯" },
   ];
   
   return (
@@ -85,6 +87,7 @@ const ImpactMetrics = () => {
               label={stat.label}
               value={stat.value}
               suffix={stat.suffix}
+              icon={stat.icon}
             />
           ))}
         </div>
