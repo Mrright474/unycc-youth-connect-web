@@ -14,6 +14,8 @@ import Contact from "./pages/Contact";
 import Donations from "./pages/Donations";
 import LearnMore from "./pages/LearnMore";
 import Admin from "./pages/Admin";
+import News from "./pages/News";
+import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
 
 // Create a client
@@ -34,6 +36,8 @@ const App = () => (
             <Route path="/programs" element={<Programs />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/donations" element={<Donations />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/events" element={<Events />} />
             <Route path="/join/:slug" element={<LearnMore />} />
             <Route path="/programs/:slug" element={<LearnMore />} />
             <Route path="/admin" element={<Admin />} />

@@ -57,6 +57,36 @@ const Navbar = () => {
               About
             </Link>
             <Link 
+              to="/programs" 
+              className={`px-3 py-2 rounded-md text-sm font-medium ${
+                isActive("/programs") 
+                  ? "bg-unblue text-white" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              Programs
+            </Link>
+            <Link 
+              to="/news" 
+              className={`px-3 py-2 rounded-md text-sm font-medium ${
+                isActive("/news") 
+                  ? "bg-unblue text-white" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              News
+            </Link>
+            <Link 
+              to="/events" 
+              className={`px-3 py-2 rounded-md text-sm font-medium ${
+                isActive("/events") 
+                  ? "bg-unblue text-white" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+            >
+              Events
+            </Link>
+            <Link 
               to="/join" 
               className={`px-3 py-2 rounded-md text-sm font-medium ${
                 isActive("/join") 
@@ -75,16 +105,6 @@ const Navbar = () => {
               }`}
             >
               Structure
-            </Link>
-            <Link 
-              to="/programs" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
-                isActive("/programs") 
-                  ? "bg-unblue text-white" 
-                  : "text-gray-700 hover:bg-gray-100"
-              }`}
-            >
-              Programs
             </Link>
             <Link 
               to="/contact" 
@@ -156,6 +176,39 @@ const Navbar = () => {
               About
             </Link>
             <Link 
+              to="/programs" 
+              className={`px-3 py-2 rounded-md text-base font-medium ${
+                isActive("/programs") 
+                  ? "bg-unblue text-white" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={closeMenu}
+            >
+              Programs
+            </Link>
+            <Link 
+              to="/news" 
+              className={`px-3 py-2 rounded-md text-base font-medium ${
+                isActive("/news") 
+                  ? "bg-unblue text-white" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={closeMenu}
+            >
+              News
+            </Link>
+            <Link 
+              to="/events" 
+              className={`px-3 py-2 rounded-md text-base font-medium ${
+                isActive("/events") 
+                  ? "bg-unblue text-white" 
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+              onClick={closeMenu}
+            >
+              Events
+            </Link>
+            <Link 
               to="/join" 
               className={`px-3 py-2 rounded-md text-base font-medium ${
                 isActive("/join") 
@@ -176,17 +229,6 @@ const Navbar = () => {
               onClick={closeMenu}
             >
               Structure
-            </Link>
-            <Link 
-              to="/programs" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
-                isActive("/programs") 
-                  ? "bg-unblue text-white" 
-                  : "text-gray-700 hover:bg-gray-100"
-              }`}
-              onClick={closeMenu}
-            >
-              Programs
             </Link>
             <Link 
               to="/contact" 
