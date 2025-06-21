@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -61,142 +60,155 @@ const News = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="py-16 bg-unblue text-white">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="flex items-center gap-4 mb-6">
-              <Button variant="ghost" size="sm" className="text-white hover:bg-white/10" asChild>
-                <Link to="/" className="gap-2">
-                  <ArrowLeft className="w-4 h-4" />
-                  Back to Home
-                </Link>
-              </Button>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">UNYCC News</h1>
-            <p className="text-xl text-unblue-light max-w-3xl">
-              Stay updated with the latest developments, success stories, and initiatives from our global network of young leaders.
-            </p>
-          </div>
-        </section>
-
-        {/* Search and Filter */}
-        <section className="py-8 bg-gray-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input 
-                  placeholder="Search news articles..." 
-                  className="pl-10"
-                />
+    <div className="min-h-screen flex flex-col relative">
+      {/* Watermark Logo */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-0 opacity-5"
+        style={{
+          backgroundImage: `url('/lovable-uploads/ff7fc504-d57f-4296-9405-802d4ebb657b.png')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+          backgroundSize: '40%',
+        }}
+      />
+      
+      <div className="relative z-10">
+        <Navbar />
+        <main className="flex-grow">
+          {/* Hero Section */}
+          <section className="py-16 bg-unblue text-white">
+            <div className="container mx-auto px-4 md:px-6">
+              <div className="flex items-center gap-4 mb-6">
+                <Button variant="ghost" size="sm" className="text-white hover:bg-white/10" asChild>
+                  <Link to="/" className="gap-2">
+                    <ArrowLeft className="w-4 h-4" />
+                    Back to Home
+                  </Link>
+                </Button>
               </div>
-              <div className="flex gap-2 flex-wrap">
-                {["All", "Climate Action", "Events", "Partnerships", "Projects"].map((category) => (
-                  <Button 
-                    key={category}
-                    variant={category === "All" ? "default" : "outline"}
-                    size="sm"
-                  >
-                    {category}
-                  </Button>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">UNYCC News</h1>
+              <p className="text-xl text-unblue-light max-w-3xl">
+                Stay updated with the latest developments, success stories, and initiatives from our global network of young leaders.
+              </p>
+            </div>
+          </section>
+
+          {/* Search and Filter */}
+          <section className="py-8 bg-gray-50">
+            <div className="container mx-auto px-4 md:px-6">
+              <div className="flex flex-col md:flex-row gap-4 items-center">
+                <div className="relative flex-1 max-w-md">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Input 
+                    placeholder="Search news articles..." 
+                    className="pl-10"
+                  />
+                </div>
+                <div className="flex gap-2 flex-wrap">
+                  {["All", "Climate Action", "Events", "Partnerships", "Projects"].map((category) => (
+                    <Button 
+                      key={category}
+                      variant={category === "All" ? "default" : "outline"}
+                      size="sm"
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Featured Articles */}
+          <section className="py-12">
+            <div className="container mx-auto px-4 md:px-6">
+              <h2 className="text-2xl font-bold mb-8">Featured Stories</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                {allNews.filter(article => article.featured).map((article) => (
+                  <Card key={article.id} className="hover:shadow-lg transition-shadow">
+                    <div className="aspect-video overflow-hidden rounded-t-lg">
+                      <img 
+                        src={article.image} 
+                        alt={article.title}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <CardHeader>
+                      <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
+                        <span className="bg-unblue/10 text-unblue px-2 py-1 rounded-full text-xs">
+                          {article.category}
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          <span>{new Date(article.date).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+                      <CardTitle className="text-xl leading-tight">{article.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-600 mb-4">{article.excerpt}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <User className="w-4 h-4" />
+                          <span>{article.author}</span>
+                        </div>
+                        <Button variant="ghost" size="sm" className="text-unblue hover:text-unblue-dark">
+                          Read More
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Featured Articles */}
-        <section className="py-12">
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-2xl font-bold mb-8">Featured Stories</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-              {allNews.filter(article => article.featured).map((article) => (
-                <Card key={article.id} className="hover:shadow-lg transition-shadow">
-                  <div className="aspect-video overflow-hidden rounded-t-lg">
-                    <img 
-                      src={article.image} 
-                      alt={article.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <CardHeader>
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
-                      <span className="bg-unblue/10 text-unblue px-2 py-1 rounded-full text-xs">
-                        {article.category}
-                      </span>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        <span>{new Date(article.date).toLocaleDateString()}</span>
-                      </div>
+          {/* All Articles */}
+          <section className="py-12 bg-gray-50">
+            <div className="container mx-auto px-4 md:px-6">
+              <h2 className="text-2xl font-bold mb-8">All Articles</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {allNews.map((article) => (
+                  <Card key={article.id} className="hover:shadow-lg transition-shadow bg-white">
+                    <div className="aspect-video overflow-hidden rounded-t-lg">
+                      <img 
+                        src={article.image} 
+                        alt={article.title}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
-                    <CardTitle className="text-xl leading-tight">{article.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 mb-4">{article.excerpt}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <User className="w-4 h-4" />
-                        <span>{article.author}</span>
+                    <CardHeader>
+                      <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
+                        <span className="bg-unblue/10 text-unblue px-2 py-1 rounded-full text-xs">
+                          {article.category}
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          <span>{new Date(article.date).toLocaleDateString()}</span>
+                        </div>
                       </div>
-                      <Button variant="ghost" size="sm" className="text-unblue hover:text-unblue-dark">
-                        Read More
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      <CardTitle className="text-lg leading-tight">{article.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-600 text-sm mb-4">{article.excerpt}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <User className="w-4 h-4" />
+                          <span className="text-xs">{article.author}</span>
+                        </div>
+                        <Button variant="ghost" size="sm" className="text-unblue hover:text-unblue-dark text-xs">
+                          Read More
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-
-        {/* All Articles */}
-        <section className="py-12 bg-gray-50">
-          <div className="container mx-auto px-4 md:px-6">
-            <h2 className="text-2xl font-bold mb-8">All Articles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {allNews.map((article) => (
-                <Card key={article.id} className="hover:shadow-lg transition-shadow bg-white">
-                  <div className="aspect-video overflow-hidden rounded-t-lg">
-                    <img 
-                      src={article.image} 
-                      alt={article.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <CardHeader>
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
-                      <span className="bg-unblue/10 text-unblue px-2 py-1 rounded-full text-xs">
-                        {article.category}
-                      </span>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        <span>{new Date(article.date).toLocaleDateString()}</span>
-                      </div>
-                    </div>
-                    <CardTitle className="text-lg leading-tight">{article.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 text-sm mb-4">{article.excerpt}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <User className="w-4 h-4" />
-                        <span className="text-xs">{article.author}</span>
-                      </div>
-                      <Button variant="ghost" size="sm" className="text-unblue hover:text-unblue-dark text-xs">
-                        Read More
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
+          </section>
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };
