@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Pen, Briefcase, Gavel, Megaphone, FileText, GraduationCap, Globe, Heart } from "lucide-react";
+import { Pen, Briefcase, Gavel, Megaphone, FileText, GraduationCap, Globe, Heart, Settings } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -25,6 +25,13 @@ const TeamSection = () => {
       image: "/lovable-uploads/71de3a9f-b354-4926-8c9a-a4d45433d8ce.png",
       bio: "Dedicated leader from Uganda managing organizational operations and documentation.",
       icon: Pen
+    },
+    {
+      name: "Brenda",
+      title: "Director of Operations",
+      image: "/lovable-uploads/d6302b0b-39fa-4f7b-8654-14c2526973da.png",
+      bio: "Strategic operations leader ensuring efficient coordination and management of UNYCC's day-to-day activities and organizational processes.",
+      icon: Settings
     },
     {
       name: "Laura Muwanguzi",
