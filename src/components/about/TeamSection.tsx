@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Pen, Briefcase, Gavel, Megaphone, FileText, GraduationCap, Globe, Heart, Settings } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -78,7 +77,7 @@ const TeamSection = () => {
     {
       name: "Akoragye Osbert",
       title: "Publications Officer",
-      image: "/lovable-uploads/d40da04a-513a-4800-b4e2-56404f202a6a.png",
+      image: "/lovable-uploads/7cf980f7-dca8-4616-b88a-12fa275ac44d.png",
       bio: "Communications specialist from Uganda responsible for managing UNYCC's publications and digital content strategy.",
       icon: FileText
     }
@@ -108,13 +107,18 @@ const TeamSection = () => {
                         member.title === "Director of Programs"
                           ? "object-top scale-110"
                           : member.title === "PR Officer & Linguist"
-                            ? "object-center scale-125"  
-                            : "object-center"
+                            ? "object-center scale-125"
+                            : member.title === "Director of Operations"
+                              ? "object-center scale-110"
+                              : member.title === "Publications Officer"
+                                ? "object-center scale-105"
+                                : "object-center"
                       }`}
                       priority={
                         member.title === "Director of Programs" || 
                         member.title === "PR Officer & Linguist" || 
-                        member.title === "Global Director for Youth Empowerment and Cultural Diplomacy"
+                        member.title === "Global Director for Youth Empowerment and Cultural Diplomacy" ||
+                        member.title === "Publications Officer"
                       }
                       skeletonClassName="w-full h-full rounded-full"
                     />
