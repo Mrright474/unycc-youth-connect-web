@@ -21,24 +21,24 @@ const Navbar = () => {
   };
   
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center" onClick={closeMenu}>
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 lg:h-20">
+          {/* Logo - Made more prominent */}
+          <Link to="/" className="flex items-center flex-shrink-0" onClick={closeMenu}>
             <img 
               src="/lovable-uploads/1ddde308-f2d4-42ba-be9d-a316584451ce.png" 
               alt="UNYCC Logo" 
-              className="h-10 w-auto object-contain" 
+              className="h-12 w-auto object-contain lg:h-16" 
             />
-            <span className="ml-2 text-lg font-semibold hidden sm:block">UNYCC</span>
+            <span className="ml-3 text-xl font-bold text-unblue lg:text-2xl">UNYCC</span>
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-1">
+          <div className="hidden lg:flex space-x-1 xl:space-x-2">
             <Link 
               to="/" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -48,7 +48,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/about" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/about") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -58,7 +58,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/programs" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/programs") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -68,7 +68,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/news" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/news") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -78,7 +78,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/events" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/events") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -88,7 +88,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/join" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/join") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -98,7 +98,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/structure" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/structure") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -108,7 +108,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/contact" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/contact") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -118,7 +118,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/donations" 
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
+              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 isActive("/donations") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -129,21 +129,21 @@ const Navbar = () => {
           </div>
           
           {/* Join CTA Button */}
-          <div className="hidden md:block">
-            <Button asChild>
+          <div className="hidden lg:block">
+            <Button asChild className="bg-unblue hover:bg-unblue-dark">
               <Link to="/join">Get Involved</Link>
             </Button>
           </div>
           
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button 
               variant="ghost" 
               size="icon" 
-              className="text-gray-700"
+              className="text-gray-700 hover:bg-gray-100"
               onClick={toggleMenu}
             >
-              {isMenuOpen ? <X /> : <Menu />}
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
         </div>
@@ -151,11 +151,11 @@ const Navbar = () => {
       
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 py-2 px-2">
-          <div className="flex flex-col space-y-1">
+        <div className="lg:hidden bg-white border-t border-gray-200 shadow-lg">
+          <div className="px-4 py-2 space-y-1 max-h-96 overflow-y-auto">
             <Link 
               to="/" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                 isActive("/") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -166,7 +166,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/about" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                 isActive("/about") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -177,7 +177,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/programs" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                 isActive("/programs") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -188,7 +188,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/news" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                 isActive("/news") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -199,7 +199,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/events" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                 isActive("/events") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -210,7 +210,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/join" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                 isActive("/join") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -221,7 +221,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/structure" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                 isActive("/structure") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -232,7 +232,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/contact" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                 isActive("/contact") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -243,7 +243,7 @@ const Navbar = () => {
             </Link>
             <Link 
               to="/donations" 
-              className={`px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                 isActive("/donations") 
                   ? "bg-unblue text-white" 
                   : "text-gray-700 hover:bg-gray-100"
@@ -252,13 +252,15 @@ const Navbar = () => {
             >
               Donate
             </Link>
-            <Link 
-              to="/join" 
-              className="mt-2 block"
-              onClick={closeMenu}
-            >
-              <Button className="w-full">Get Involved</Button>
-            </Link>
+            <div className="pt-4 pb-2">
+              <Link 
+                to="/join" 
+                className="block"
+                onClick={closeMenu}
+              >
+                <Button className="w-full bg-unblue hover:bg-unblue-dark">Get Involved</Button>
+              </Link>
+            </div>
           </div>
         </div>
       )}

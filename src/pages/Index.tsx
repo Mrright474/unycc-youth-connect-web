@@ -19,7 +19,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="min-h-screen flex flex-col relative w-full overflow-x-hidden">
       {/* Watermark Logo */}
       <div 
         className="fixed inset-0 pointer-events-none z-0 opacity-5"
@@ -27,13 +27,13 @@ const Index = () => {
           backgroundImage: `url('/lovable-uploads/ff7fc504-d57f-4296-9405-802d4ebb657b.png')`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
-          backgroundSize: '40%',
+          backgroundSize: 'min(40%, 300px)',
         }}
       />
       
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow w-full">
           <Hero />
           <HomeAbout />
           <Stats />
@@ -41,8 +41,8 @@ const Index = () => {
           <NewsSection />
           <EventsSection />
           <DonationCTA />
-          <div className="py-16 bg-ungray-light">
-            <div className="container mx-auto px-4 md:px-6">
+          <div className="py-8 sm:py-12 lg:py-16 bg-ungray-light">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <NewsletterSignup />
             </div>
           </div>

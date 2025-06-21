@@ -94,6 +94,16 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Ensure images are responsive by default */
+  img {
+    @apply max-w-full h-auto;
+  }
+
+  /* Ensure containers are responsive */
+  .container {
+    @apply w-full mx-auto px-4 sm:px-6 lg:px-8;
+  }
 }
 
 /* Custom UNYCC styles */
@@ -107,11 +117,11 @@
   }
   
   .section-title {
-    @apply text-3xl md:text-4xl font-bold mb-6 text-foreground;
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 text-foreground leading-tight;
   }
   
   .section-subtitle {
-    @apply text-xl md:text-2xl font-semibold mb-4 text-foreground;
+    @apply text-lg sm:text-xl lg:text-2xl font-semibold mb-3 sm:mb-4 text-foreground;
   }
   
   .animate-on-scroll {
@@ -120,5 +130,91 @@
   
   .animate-on-scroll.visible {
     @apply animate-slide-up;
+  }
+
+  /* Responsive text utilities */
+  .responsive-text-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .responsive-text-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .responsive-text-lg {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .responsive-text-xl {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+
+  .responsive-text-2xl {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+  }
+
+  .responsive-text-3xl {
+    @apply text-3xl sm:text-4xl lg:text-5xl;
+  }
+
+  /* Responsive spacing utilities */
+  .responsive-padding {
+    @apply p-4 sm:p-6 lg:p-8 xl:p-12;
+  }
+
+  .responsive-margin {
+    @apply m-4 sm:m-6 lg:m-8 xl:m-12;
+  }
+
+  /* Grid responsive utilities */
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  .responsive-grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  .responsive-grid-3 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  /* Card responsive styling */
+  .responsive-card {
+    @apply p-4 sm:p-6 lg:p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow;
+  }
+
+  /* Button responsive styling */
+  .responsive-button {
+    @apply px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-md transition-colors;
+  }
+}
+
+/* Ensure all images are responsive and prevent overflow */
+@layer utilities {
+  .img-responsive {
+    @apply w-full h-auto object-cover;
+  }
+
+  .aspect-video-responsive {
+    @apply aspect-video w-full overflow-hidden;
+  }
+
+  .aspect-square-responsive {
+    @apply aspect-square w-full overflow-hidden;
+  }
+
+  /* Prevent horizontal scroll */
+  .no-horizontal-scroll {
+    @apply overflow-x-hidden;
+  }
+
+  /* Responsive flex utilities */
+  .flex-responsive {
+    @apply flex flex-col sm:flex-row items-center gap-4 sm:gap-6;
+  }
+
+  .flex-responsive-reverse {
+    @apply flex flex-col-reverse sm:flex-row items-center gap-4 sm:gap-6;
   }
 }

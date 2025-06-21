@@ -10,7 +10,7 @@ import History from "@/components/about/History";
 
 const About = () => {
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="min-h-screen flex flex-col relative w-full overflow-x-hidden">
       {/* Watermark Logo */}
       <div 
         className="fixed inset-0 pointer-events-none z-0 opacity-5"
@@ -18,13 +18,13 @@ const About = () => {
           backgroundImage: `url('/lovable-uploads/ff7fc504-d57f-4296-9405-802d4ebb657b.png')`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
-          backgroundSize: '40%',
+          backgroundSize: 'min(40%, 300px)',
         }}
       />
       
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow w-full">
           <AboutHero />
           <MissionVision />
           <Values />
