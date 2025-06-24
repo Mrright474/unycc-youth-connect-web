@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -55,7 +54,15 @@ const IndividualForm = () => {
 
       const { error } = await supabase
         .from('members')
-        .insert([validatedData]);
+        .insert([{
+          first_name: validatedData.first_name,
+          last_name: validatedData.last_name,
+          email: validatedData.email,
+          country: validatedData.country,
+          age_group: validatedData.age_group,
+          interest: validatedData.interest,
+          heard_from: validatedData.heard_from || "",
+        }]);
 
       if (error) throw error;
 

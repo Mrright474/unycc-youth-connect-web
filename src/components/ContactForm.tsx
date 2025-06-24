@@ -6,6 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { contactFormSchema } from "@/lib/validation";
+import { z } from "zod";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -17,24 +19,34 @@ const ContactForm = () => {
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSelectChange = (value: string) => {
     setFormData((prev) => ({ ...prev, subject: value }));
+    if (errors.subject) {
+      setErrors(prev => ({ ...prev, subject: "" }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrors({});
     
     try {
+      const validatedData = contactFormSchema.parse(formData);
+
       const { error } = await supabase
         .from('contact_submissions')
-        .insert([formData]);
+        .insert([validatedData]);
 
       if (error) throw error;
 
@@ -50,12 +62,22 @@ const ContactForm = () => {
         message: "",
       });
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "There was a problem sending your message. Please try again.",
-        variant: "destructive",
-      });
-      console.error("Error submitting form:", error);
+      if (error instanceof z.ZodError) {
+        const fieldErrors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            fieldErrors[err.path[0] as string] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      } else {
+        toast({
+          title: "Error",
+          description: "There was a problem sending your message. Please try again.",
+          variant: "destructive",
+        });
+        console.error("Error submitting form:", error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -122,7 +144,9 @@ const ContactForm = () => {
                   onChange={handleChange}
                   placeholder="Enter your full name"
                   required
+                  className={errors.name ? "border-red-500" : ""}
                 />
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
               
               <div>
@@ -137,7 +161,9 @@ const ContactForm = () => {
                   onChange={handleChange}
                   placeholder="Enter your email address"
                   required
+                  className={errors.email ? "border-red-500" : ""}
                 />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
               </div>
               
               <div>
@@ -145,7 +171,7 @@ const ContactForm = () => {
                   Subject
                 </label>
                 <Select onValueChange={handleSelectChange} value={formData.subject}>
-                  <SelectTrigger>
+                  <SelectTrigger className={errors.subject ? "border-red-500" : ""}>
                     <SelectValue placeholder="Select a subject" />
                   </SelectTrigger>
                   <SelectContent>
@@ -156,6 +182,7 @@ const ContactForm = () => {
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
+                {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
               </div>
               
               <div>
@@ -170,7 +197,9 @@ const ContactForm = () => {
                   placeholder="Type your message here..."
                   rows={5}
                   required
+                  className={errors.message ? "border-red-500" : ""}
                 />
+                {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
               </div>
               
               <Button 

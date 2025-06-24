@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { countries } from "@/data/countries";
+import { partnerFormSchema } from "@/lib/validation";
+import { z } from "zod";
 
 const PartnerForm = () => {
   const { toast } = useToast();
@@ -21,31 +24,68 @@ const PartnerForm = () => {
     message: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Partnership Request Submitted",
-      description: "Thank you for your interest in partnering with UNYCC. Our team will review your information and contact you to discuss potential collaboration.",
-    });
-    setFormData({
-      organizationName: "",
-      organizationType: "",
-      contactName: "",
-      contactEmail: "",
-      website: "",
-      country: "",
-      partnershipArea: "",
-      message: "",
-    });
+    setIsSubmitting(true);
+    setErrors({});
+
+    try {
+      const validatedData = partnerFormSchema.parse(formData);
+
+      // For now, just show success toast since partners table might not exist
+      toast({
+        title: "Partnership Request Submitted",
+        description: "Thank you for your interest in partnering with UNYCC. Our team will review your information and contact you to discuss potential collaboration.",
+      });
+
+      setFormData({
+        organizationName: "",
+        organizationType: "",
+        contactName: "",
+        contactEmail: "",
+        website: "",
+        country: "",
+        partnershipArea: "",
+        message: "",
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            fieldErrors[err.path[0] as string] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      } else {
+        toast({
+          title: "Error",
+          description: "There was a problem submitting your request. Please try again.",
+          variant: "destructive",
+        });
+        console.error("Error submitting form:", error);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -58,7 +98,9 @@ const PartnerForm = () => {
           value={formData.organizationName}
           onChange={handleChange}
           required
+          className={errors.organizationName ? "border-red-500" : ""}
         />
+        {errors.organizationName && <p className="text-red-500 text-sm mt-1">{errors.organizationName}</p>}
       </div>
 
       <div>
@@ -67,7 +109,7 @@ const PartnerForm = () => {
           onValueChange={(value) => handleSelectChange("organizationType", value)}
           value={formData.organizationType}
         >
-          <SelectTrigger>
+          <SelectTrigger className={errors.organizationType ? "border-red-500" : ""}>
             <SelectValue placeholder="Select organization type" />
           </SelectTrigger>
           <SelectContent>
@@ -78,6 +120,7 @@ const PartnerForm = () => {
             <SelectItem value="other">Other</SelectItem>
           </SelectContent>
         </Select>
+        {errors.organizationType && <p className="text-red-500 text-sm mt-1">{errors.organizationType}</p>}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -89,7 +132,9 @@ const PartnerForm = () => {
             value={formData.contactName}
             onChange={handleChange}
             required
+            className={errors.contactName ? "border-red-500" : ""}
           />
+          {errors.contactName && <p className="text-red-500 text-sm mt-1">{errors.contactName}</p>}
         </div>
         <div>
           <Label htmlFor="contactEmail">Contact Email</Label>
@@ -100,7 +145,9 @@ const PartnerForm = () => {
             value={formData.contactEmail}
             onChange={handleChange}
             required
+            className={errors.contactEmail ? "border-red-500" : ""}
           />
+          {errors.contactEmail && <p className="text-red-500 text-sm mt-1">{errors.contactEmail}</p>}
         </div>
       </div>
 
@@ -111,7 +158,9 @@ const PartnerForm = () => {
           name="website"
           value={formData.website}
           onChange={handleChange}
+          className={errors.website ? "border-red-500" : ""}
         />
+        {errors.website && <p className="text-red-500 text-sm mt-1">{errors.website}</p>}
       </div>
 
       <div>
@@ -120,7 +169,7 @@ const PartnerForm = () => {
           onValueChange={(value) => handleSelectChange("country", value)}
           value={formData.country}
         >
-          <SelectTrigger>
+          <SelectTrigger className={errors.country ? "border-red-500" : ""}>
             <SelectValue placeholder="Select country" />
           </SelectTrigger>
           <SelectContent>
@@ -131,6 +180,7 @@ const PartnerForm = () => {
             ))}
           </SelectContent>
         </Select>
+        {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
       </div>
 
       <div>
@@ -139,7 +189,7 @@ const PartnerForm = () => {
           onValueChange={(value) => handleSelectChange("partnershipArea", value)}
           value={formData.partnershipArea}
         >
-          <SelectTrigger>
+          <SelectTrigger className={errors.partnershipArea ? "border-red-500" : ""}>
             <SelectValue placeholder="Select primary interest area" />
           </SelectTrigger>
           <SelectContent>
@@ -150,6 +200,7 @@ const PartnerForm = () => {
             <SelectItem value="other">Other</SelectItem>
           </SelectContent>
         </Select>
+        {errors.partnershipArea && <p className="text-red-500 text-sm mt-1">{errors.partnershipArea}</p>}
       </div>
 
       <div>
@@ -161,10 +212,14 @@ const PartnerForm = () => {
           onChange={handleChange}
           rows={4}
           required
+          className={errors.message ? "border-red-500" : ""}
         />
+        {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
       </div>
 
-      <Button type="submit" className="w-full">Submit Partnership Request</Button>
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Submit Partnership Request"}
+      </Button>
     </form>
   );
 };

@@ -5,36 +5,38 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, CheckCircle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { newsletterSchema } from "@/lib/validation";
+import { z } from "zod";
 
 const NewsletterSignup = () => {
   const [email, setEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [error, setError] = useState("");
   const { toast } = useToast();
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
     
-    if (!email) {
-      toast({
-        title: "Error",
-        description: "Please enter your email address.",
-        variant: "destructive",
-      });
-      return;
+    try {
+      const validatedData = newsletterSchema.parse({ email });
+      setIsSubscribing(true);
+
+      // Simulate API call
+      setTimeout(() => {
+        setIsSubscribed(true);
+        setIsSubscribing(false);
+        toast({
+          title: "Success!",
+          description: "You've been subscribed to our newsletter.",
+        });
+      }, 1000);
+    } catch (validationError) {
+      if (validationError instanceof z.ZodError) {
+        setError(validationError.errors[0]?.message || "Invalid email address");
+      }
     }
-
-    setIsSubscribing(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubscribed(true);
-      setIsSubscribing(false);
-      toast({
-        title: "Success!",
-        description: "You've been subscribed to our newsletter.",
-      });
-    }, 1000);
   };
 
   if (isSubscribed) {
@@ -65,13 +67,19 @@ const NewsletterSignup = () => {
       <CardContent>
         <form onSubmit={handleSubscribe} className="space-y-4">
           <div className="flex flex-col sm:flex-row gap-4">
-            <Input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-white text-gray-900"
-            />
+            <div className="flex-1">
+              <Input
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setError("");
+                }}
+                className={`bg-white text-gray-900 ${error ? "border-red-500" : ""}`}
+              />
+              {error && <p className="text-red-300 text-sm mt-1">{error}</p>}
+            </div>
             <Button 
               type="submit" 
               disabled={isSubscribing}

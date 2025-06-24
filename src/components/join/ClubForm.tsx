@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { clubFormSchema } from "@/lib/validation";
+import { z } from "zod";
 
 const ClubForm = () => {
   const { toast } = useToast();
@@ -21,27 +24,37 @@ const ClubForm = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrors({});
 
     try {
+      const validatedData = clubFormSchema.parse({
+        ...formData,
+        members_estimate: parseInt(formData.members_estimate)
+      });
+
       const { error } = await supabase
         .from('clubs')
-        .insert([{
-          ...formData,
-          members_estimate: parseInt(formData.members_estimate)
-        }]);
+        .insert([validatedData]);
 
       if (error) throw error;
 
@@ -61,12 +74,22 @@ const ClubForm = () => {
         reason: "",
       });
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "There was a problem submitting your application. Please try again.",
-        variant: "destructive",
-      });
-      console.error("Error submitting form:", error);
+      if (error instanceof z.ZodError) {
+        const fieldErrors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            fieldErrors[err.path[0] as string] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      } else {
+        toast({
+          title: "Error",
+          description: "There was a problem submitting your application. Please try again.",
+          variant: "destructive",
+        });
+        console.error("Error submitting form:", error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -82,7 +105,9 @@ const ClubForm = () => {
           value={formData.institution_name}
           onChange={handleChange}
           required
+          className={errors.institution_name ? "border-red-500" : ""}
         />
+        {errors.institution_name && <p className="text-red-500 text-sm mt-1">{errors.institution_name}</p>}
       </div>
 
       <div>
@@ -91,7 +116,7 @@ const ClubForm = () => {
           onValueChange={(value) => handleSelectChange("institution_type", value)}
           value={formData.institution_type}
         >
-          <SelectTrigger>
+          <SelectTrigger className={errors.institution_type ? "border-red-500" : ""}>
             <SelectValue placeholder="Select institution type" />
           </SelectTrigger>
           <SelectContent>
@@ -101,6 +126,7 @@ const ClubForm = () => {
             <SelectItem value="other">Other</SelectItem>
           </SelectContent>
         </Select>
+        {errors.institution_type && <p className="text-red-500 text-sm mt-1">{errors.institution_type}</p>}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -112,7 +138,9 @@ const ClubForm = () => {
             value={formData.contact_name}
             onChange={handleChange}
             required
+            className={errors.contact_name ? "border-red-500" : ""}
           />
+          {errors.contact_name && <p className="text-red-500 text-sm mt-1">{errors.contact_name}</p>}
         </div>
         <div>
           <Label htmlFor="contact_email">Contact Email</Label>
@@ -123,7 +151,9 @@ const ClubForm = () => {
             value={formData.contact_email}
             onChange={handleChange}
             required
+            className={errors.contact_email ? "border-red-500" : ""}
           />
+          {errors.contact_email && <p className="text-red-500 text-sm mt-1">{errors.contact_email}</p>}
         </div>
       </div>
 
@@ -134,7 +164,7 @@ const ClubForm = () => {
             onValueChange={(value) => handleSelectChange("country", value)}
             value={formData.country}
           >
-            <SelectTrigger>
+            <SelectTrigger className={errors.country ? "border-red-500" : ""}>
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
             <SelectContent>
@@ -145,6 +175,7 @@ const ClubForm = () => {
               <SelectItem value="other">Other</SelectItem>
             </SelectContent>
           </Select>
+          {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
         </div>
         <div>
           <Label htmlFor="city">City</Label>
@@ -154,7 +185,9 @@ const ClubForm = () => {
             value={formData.city}
             onChange={handleChange}
             required
+            className={errors.city ? "border-red-500" : ""}
           />
+          {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
         </div>
       </div>
 
@@ -167,7 +200,9 @@ const ClubForm = () => {
           value={formData.members_estimate}
           onChange={handleChange}
           required
+          className={errors.members_estimate ? "border-red-500" : ""}
         />
+        {errors.members_estimate && <p className="text-red-500 text-sm mt-1">{errors.members_estimate}</p>}
       </div>
 
       <div>
@@ -179,10 +214,14 @@ const ClubForm = () => {
           onChange={handleChange}
           rows={4}
           required
+          className={errors.reason ? "border-red-500" : ""}
         />
+        {errors.reason && <p className="text-red-500 text-sm mt-1">{errors.reason}</p>}
       </div>
 
-      <Button type="submit" className="w-full">Submit Club Application</Button>
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Submit Club Application"}
+      </Button>
     </form>
   );
 };
