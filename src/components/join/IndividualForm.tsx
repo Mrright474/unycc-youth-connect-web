@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,6 +9,8 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { countries } from "@/data/countries";
 import { sdgs } from "@/data/sdgs";
+import { memberFormSchema } from "@/lib/validation";
+import { z } from "zod";
 
 const IndividualForm = () => {
   const { toast } = useToast();
@@ -22,24 +25,37 @@ const IndividualForm = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when user makes selection
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrors({});
 
     try {
+      // Validate form data
+      const validatedData = memberFormSchema.parse(formData);
+
       const { error } = await supabase
         .from('members')
-        .insert([formData]);
+        .insert([validatedData]);
 
       if (error) throw error;
 
@@ -58,12 +74,22 @@ const IndividualForm = () => {
         heard_from: "",
       });
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "There was a problem submitting your application. Please try again.",
-        variant: "destructive",
-      });
-      console.error("Error submitting form:", error);
+      if (error instanceof z.ZodError) {
+        const fieldErrors: Record<string, string> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            fieldErrors[err.path[0] as string] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      } else {
+        toast({
+          title: "Error",
+          description: "There was a problem submitting your application. Please try again.",
+          variant: "destructive",
+        });
+        console.error("Error submitting form:", error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -80,7 +106,9 @@ const IndividualForm = () => {
             value={formData.first_name}
             onChange={handleChange}
             required
+            className={errors.first_name ? "border-red-500" : ""}
           />
+          {errors.first_name && <p className="text-red-500 text-sm mt-1">{errors.first_name}</p>}
         </div>
         <div>
           <Label htmlFor="lastName">Last Name</Label>
@@ -90,7 +118,9 @@ const IndividualForm = () => {
             value={formData.last_name}
             onChange={handleChange}
             required
+            className={errors.last_name ? "border-red-500" : ""}
           />
+          {errors.last_name && <p className="text-red-500 text-sm mt-1">{errors.last_name}</p>}
         </div>
       </div>
 
@@ -103,7 +133,9 @@ const IndividualForm = () => {
           value={formData.email}
           onChange={handleChange}
           required
+          className={errors.email ? "border-red-500" : ""}
         />
+        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
       </div>
 
       <div>
@@ -112,7 +144,7 @@ const IndividualForm = () => {
           onValueChange={(value) => handleSelectChange("country", value)}
           value={formData.country}
         >
-          <SelectTrigger>
+          <SelectTrigger className={errors.country ? "border-red-500" : ""}>
             <SelectValue placeholder="Select your country" />
           </SelectTrigger>
           <SelectContent>
@@ -123,6 +155,7 @@ const IndividualForm = () => {
             ))}
           </SelectContent>
         </Select>
+        {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
       </div>
 
       <div>
@@ -149,6 +182,7 @@ const IndividualForm = () => {
             <Label htmlFor="35+">35+</Label>
           </div>
         </RadioGroup>
+        {errors.age_group && <p className="text-red-500 text-sm mt-1">{errors.age_group}</p>}
       </div>
 
       <div>
@@ -157,7 +191,7 @@ const IndividualForm = () => {
           onValueChange={(value) => handleSelectChange("interest", value)}
           value={formData.interest}
         >
-          <SelectTrigger>
+          <SelectTrigger className={errors.interest ? "border-red-500" : ""}>
             <SelectValue placeholder="Select your primary interest" />
           </SelectTrigger>
           <SelectContent>
@@ -168,6 +202,7 @@ const IndividualForm = () => {
             ))}
           </SelectContent>
         </Select>
+        {errors.interest && <p className="text-red-500 text-sm mt-1">{errors.interest}</p>}
       </div>
 
       <div>
@@ -180,7 +215,9 @@ const IndividualForm = () => {
         />
       </div>
 
-      <Button type="submit" className="w-full">Submit Application</Button>
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Submitting..." : "Submit Application"}
+      </Button>
     </form>
   );
 };
