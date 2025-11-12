@@ -37,42 +37,14 @@ const AdminMembers = () => {
     setConnectionStatus("checking");
     
     try {
-      // Get admin token from localStorage
-      const adminToken = localStorage.getItem("admin_token");
-      if (!adminToken) {
-        throw new Error("Admin authentication required");
-      }
-
-      // Configure a timeout to handle network issues
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
-
-      // Test connection to Supabase
-      const { error: pingError } = await supabase
-        .from('members')
-        .select('count')
-        .abortSignal(controller.signal);
-
-      clearTimeout(timeoutId);
-      
-      if (pingError) throw pingError;
-      
-      setConnectionStatus("connected");
-      
-      // Set up another timeout for the main query
-      const dataController = new AbortController();
-      const dataTimeoutId = setTimeout(() => dataController.abort(), 10000); // 10 second timeout
-      
       const { data, error } = await supabase
         .from('members')
         .select('*')
-        .order('created_at', { ascending: false })
-        .abortSignal(dataController.signal);
-
-      clearTimeout(dataTimeoutId);
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       
+      setConnectionStatus("connected");
       setMembers(data || []);
     } catch (error: any) {
       console.error('Error fetching members:', error);
@@ -132,22 +104,10 @@ const AdminMembers = () => {
 
   const updateMemberStatus = async (memberId: string, newStatus: string) => {
     try {
-      // Get admin token from localStorage
-      const adminToken = localStorage.getItem("admin_token");
-      if (!adminToken) {
-        throw new Error("Admin authentication required");
-      }
-
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
-      
       const { error } = await supabase
         .from('members')
         .update({ status: newStatus })
-        .eq('id', memberId)
-        .abortSignal(controller.signal);
-      
-      clearTimeout(timeoutId);
+        .eq('id', memberId);
       
       if (error) throw error;
       

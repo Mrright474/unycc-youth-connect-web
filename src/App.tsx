@@ -15,6 +15,8 @@ import Contact from "./pages/Contact";
 import Donations from "./pages/Donations";
 import LearnMore from "./pages/LearnMore";
 import Admin from "./pages/Admin";
+import AdminAuth from "./pages/AdminAuth";
+import AdminDashboard from "./pages/AdminDashboard";
 import News from "./pages/News";
 import Events from "./pages/Events";
 import NotFound from "./pages/NotFound";
@@ -43,6 +45,8 @@ const App = () => (
               <Route path="/join/:slug" element={<LearnMore />} />
               <Route path="/programs/:slug" element={<LearnMore />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/auth" element={<AdminAuth />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

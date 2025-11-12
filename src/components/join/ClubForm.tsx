@@ -54,7 +54,16 @@ const ClubForm = () => {
 
       const { error } = await supabase
         .from('clubs')
-        .insert([validatedData]);
+        .insert([{
+          institution_name: validatedData.institution_name!,
+          institution_type: validatedData.institution_type!,
+          contact_name: validatedData.contact_name!,
+          contact_email: validatedData.contact_email!,
+          country: validatedData.country!,
+          city: validatedData.city!,
+          members_estimate: validatedData.members_estimate!,
+          reason: validatedData.reason!
+        }]);
 
       if (error) throw error;
 
