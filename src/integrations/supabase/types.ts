@@ -14,7 +14,132 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      clubs: {
+        Row: {
+          city: string
+          contact_email: string
+          contact_name: string
+          country: string
+          created_at: string
+          id: string
+          institution_name: string
+          institution_type: string
+          members_estimate: number
+          reason: string
+          status: string | null
+        }
+        Insert: {
+          city: string
+          contact_email: string
+          contact_name: string
+          country: string
+          created_at?: string
+          id?: string
+          institution_name: string
+          institution_type: string
+          members_estimate: number
+          reason: string
+          status?: string | null
+        }
+        Update: {
+          city?: string
+          contact_email?: string
+          contact_name?: string
+          country?: string
+          created_at?: string
+          id?: string
+          institution_name?: string
+          institution_type?: string
+          members_estimate?: number
+          reason?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          subject?: string
+        }
+        Relationships: []
+      }
+      members: {
+        Row: {
+          age_group: string
+          country: string
+          created_at: string
+          email: string
+          first_name: string
+          heard_from: string | null
+          id: string
+          interest: string
+          last_name: string
+          status: string | null
+        }
+        Insert: {
+          age_group: string
+          country: string
+          created_at?: string
+          email: string
+          first_name: string
+          heard_from?: string | null
+          id?: string
+          interest: string
+          last_name: string
+          status?: string | null
+        }
+        Update: {
+          age_group?: string
+          country?: string
+          created_at?: string
+          email?: string
+          first_name?: string
+          heard_from?: string | null
+          id?: string
+          interest?: string
+          last_name?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
+      newsletter_subscriptions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
