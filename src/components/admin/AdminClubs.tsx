@@ -28,6 +28,20 @@ const AdminClubs = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { toast } = useToast();
 
+  const handleExport = () => {
+    const filteredData = statusFilter === 'all' 
+      ? clubs 
+      : clubs.filter(c => c.status === statusFilter);
+    
+    const exportData = formatDataForExport(filteredData, ['id']);
+    exportToCSV(exportData, 'club_applications');
+    
+    toast({
+      title: 'Success',
+      description: 'Clubs exported successfully',
+    });
+  };
+
   const fetchClubs = async () => {
     setLoading(true);
     try {

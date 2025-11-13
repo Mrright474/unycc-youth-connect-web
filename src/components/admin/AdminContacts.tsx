@@ -39,6 +39,16 @@ export default function AdminContacts() {
     }
   }, [searchTerm, contacts]);
 
+  const handleExport = () => {
+    const exportData = formatDataForExport(filteredContacts, ['id']);
+    exportToCSV(exportData, 'contact_submissions');
+    
+    toast({
+      title: 'Success',
+      description: 'Contact submissions exported successfully',
+    });
+  };
+
   const fetchContacts = async () => {
     try {
       const { data, error } = await supabase
