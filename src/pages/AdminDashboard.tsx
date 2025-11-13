@@ -4,11 +4,12 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogOut, Users, Building2, Mail, Newspaper } from 'lucide-react';
+import { LogOut, Users, Building2, Mail, Newspaper, UserCog } from 'lucide-react';
 import AdminMembers from '@/components/admin/AdminMembers';
 import AdminClubs from '@/components/admin/AdminClubs';
 import AdminContacts from '@/components/admin/AdminContacts';
 import AdminNewsletter from '@/components/admin/AdminNewsletter';
+import AdminUsers from '@/components/admin/AdminUsers';
 
 export default function AdminDashboard() {
   const { user, isAdmin, loading, signOut } = useAuth();
@@ -57,7 +58,7 @@ export default function AdminDashboard() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="members" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+          <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
             <TabsTrigger value="members" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               <span className="hidden sm:inline">Members</span>
@@ -73,6 +74,10 @@ export default function AdminDashboard() {
             <TabsTrigger value="newsletter" className="flex items-center gap-2">
               <Newspaper className="h-4 w-4" />
               <span className="hidden sm:inline">Newsletter</span>
+            </TabsTrigger>
+            <TabsTrigger value="admins" className="flex items-center gap-2">
+              <UserCog className="h-4 w-4" />
+              <span className="hidden sm:inline">Admins</span>
             </TabsTrigger>
           </TabsList>
 
@@ -120,6 +125,18 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <AdminNewsletter />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="admins" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Admin User Management</CardTitle>
+                <CardDescription>Invite new admins and manage admin access</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <AdminUsers />
               </CardContent>
             </Card>
           </TabsContent>
