@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, RefreshCcw, School, MapPin, Users } from "lucide-react";
+import { exportToCSV, formatDataForExport } from "@/lib/exportUtils";
 
 interface Club {
   id: string;
@@ -29,11 +30,7 @@ const AdminClubs = () => {
   const { toast } = useToast();
 
   const handleExport = () => {
-    const filteredData = statusFilter === 'all' 
-      ? clubs 
-      : clubs.filter(c => c.status === statusFilter);
-    
-    const exportData = formatDataForExport(filteredData, ['id']);
+    const exportData = formatDataForExport(filteredClubs, ['id']);
     exportToCSV(exportData, 'club_applications');
     
     toast({

@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { format } from 'date-fns';
+import { useToast } from '@/hooks/use-toast';
+import { exportToCSV, formatDataForExport } from '@/lib/exportUtils';
 
 interface ContactSubmission {
   id: string;
@@ -20,6 +22,7 @@ export default function AdminContacts() {
   const [filteredContacts, setFilteredContacts] = useState<ContactSubmission[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchContacts();
